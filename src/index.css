@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+html,
+body {
+  font-family: "inter";
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b;
+    @apply from-neutral-800 via-neutral-700 to-neutral-700;
+    @apply from-neutral-700;
+    @apply dark:text-neutral-200;
+  }
+}

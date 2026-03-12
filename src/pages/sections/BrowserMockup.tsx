@@ -10,7 +10,7 @@ const BrowserMockup: React.FC = () => {
   const tabs = [
     { name: "Hero Section", id: "heroAgent", type: "block" },
     { name: "SaaS Hero Section", id: "heroAgency", type: "block" }, // from componentRegistry
-    { name: "Minimal Footer Section", id: "JitterFooter", type: "block" },
+    { name: "Footer Section", id: "Tidescapefooter", type: "block" },
     { name: "Fancy Footer", id: "LocalyzerFooter", type: "block" },
   ];
 
@@ -56,7 +56,7 @@ const BrowserMockup: React.FC = () => {
 
       {/* Browser Content Viewport */}
       <div className="w-full overflow-hidden bg-gray-100/50 px-4 pt-4 dark:bg-neutral-900">
-        <div className="relative flex min-h-[46rem] max-h-[46rem] flex-col rounded-t-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
+        <div className="relative flex min-h-[46rem] max-h-[52rem] flex-col rounded-t-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
           {/* Dynamic Component Viewport */}
           <AnimatePresence mode="wait">
             <motion.div

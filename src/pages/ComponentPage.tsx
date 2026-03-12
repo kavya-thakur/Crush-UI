@@ -60,9 +60,9 @@ export default function ComponentPage() {
             {tab === "preview" ? (
               <motion.div
                 key="preview"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 className="space-y-12"
               >
                 {componentData.variants ? (
@@ -75,29 +75,41 @@ export default function ComponentPage() {
                         <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
                       </div>
 
+                      {/* FIX 1: Pass the category properly to variants */}
                       <ComponentPreview
                         component={Component}
                         variant={variant.name}
+                        category={componentData.category}
                       />
                     </section>
                   ))
                 ) : (
-                  <ComponentPreview component={Component} />
+                  <section className="space-y-5">
+                    {/* FIX 2: Added a section wrapper and category pass for single components */}
+                    <ComponentPreview
+                      component={Component}
+                      category={componentData.category}
+                    />
+                  </section>
                 )}
               </motion.div>
             ) : (
               <motion.div
                 key="code"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 className="space-y-6"
               >
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-                  Source Code
-                </h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
+                    Source Code
+                  </h3>
+                  <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
+                </div>
 
-                <div className="h-[500px] md:h-[650px] w-full overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-[#0d0d0e]">
-                  <div className="h-full overflow-y-auto custom-scrollbar">
+                <div className="h-[500px] md:h-[650px] w-full overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-[#0d0d0e] shadow-2xl">
+                  <div className="h-full overflow-y-auto custom-scrollbar p-4">
                     <CodeBlock code={componentData.code || ""} language="tsx" />
                   </div>
                 </div>

@@ -3,10 +3,6 @@ import { ComponentType } from "react";
 /* BUTTONS */
 import Button from "../components/ui/button/Button";
 /* CARDS */
-import Card from "../components/ui/cards/Card";
-import FeatureCard from "../components/ui/cards/FeatureCard";
-import GlassCard from "../components/ui/cards/GlassCard";
-import ProductCard from "../components/ui/cards/ProductCard";
 
 /* TEXT */
 import BlurRevealText from "../components/ui/text/BlurUpAnimation";
@@ -15,6 +11,10 @@ import GradientRevealText from "../components/ui/text/GradientFade";
 
 import NavbarMinimal from "../components/ui/navbars/NavbarMinimal";
 import PremiumNavbar from "../components/ui/navbars/NavbarSaas";
+import { UltraPolishedCard } from "../components/ui/cards/MarqueCard";
+import { BentoAnalyticsCard } from "../components/ui/cards/BentoAnalyticsCard";
+import { GlassSecureCard } from "../components/ui/cards/GlassSecureCard";
+import { PricingHighlightCard } from "../components/ui/cards/PricingHighlightCard";
 
 type ComponentVariant = {
   name: string;
@@ -189,132 +189,93 @@ export default NavbarMinimal;
   },
   /* CARDS */
   card: {
-    title: "Content Card",
+    title: "Marque Card",
     description:
       "A minimalist container designed to group and elevate related content with subtle borders.",
     category: "Cards Components",
-    component: Card,
+    component: UltraPolishedCard,
     previewProps: {
-      title: "Example Card",
-      children: "This is a simple card component.",
+      title: "ToolKit Card",
+      children: "This is a modern animated card component.",
     },
     usage: `<Card title="Example">Content</Card>`,
     code: `
-export default function Card({ title, children }) {
-  return (
-    <div className="border border-neutral-200 rounded-xl p-6 bg-white shadow-sm">
-      <h3 className="font-semibold mb-2">{title}</h3>
-      <div className="text-neutral-600 text-sm">{children}</div>
-    </div>
-  )
-}
-`,
-  },
-
-  featureCard: {
-    title: "Feature Card",
-    description:
-      "An elevated surface with hover interactions, perfect for showcasing product value propositions.",
-    category: "Cards Components",
-    component: FeatureCard,
-    previewHeight: 320,
-    usage: `<FeatureCard />`,
-    code: `
-import { motion } from "framer-motion"
-
-export default function FeatureCard() {
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.2 }}
-      className="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 shadow-sm hover:shadow-md"
-    >
-      <div className="mb-4 h-10 w-10 rounded-md bg-neutral-900 flex items-center justify-center text-white text-sm font-medium">
-        AI
+  export default function Card({ title, children }) {
+    return (
+      <div className="border border-neutral-200 rounded-xl p-6 bg-white shadow-sm">
+        <h3 className="font-semibold mb-2">{title}</h3>
+        <div className="text-neutral-600 text-sm">{children}</div>
       </div>
-
-      <h3 className="text-base font-semibold text-neutral-900 mb-2">
-        AI Powered
-      </h3>
-
-      <p className="text-sm text-neutral-500 leading-relaxed">
-        Build intelligent experiences with our AI driven components.
-      </p>
-    </motion.div>
-  )
-}
-`,
+    )
+  }
+  `,
   },
-
+  bentoCard: {
+    title: "Marque Card",
+    description:
+      "A minimalist container designed to group and elevate related content with subtle borders.",
+    category: "Cards Components",
+    component: BentoAnalyticsCard,
+    previewProps: {
+      title: "ToolKit Card",
+      children: "This is a modern animated card component.",
+    },
+    usage: `<Card title="Example">Content</Card>`,
+    code: `
+  export default function Card({ title, children }) {
+    return (
+      <div className="border border-neutral-200 rounded-xl p-6 bg-white shadow-sm">
+        <h3 className="font-semibold mb-2">{title}</h3>
+        <div className="text-neutral-600 text-sm">{children}</div>
+      </div>
+    )
+  }
+  `,
+  },
   glassCard: {
-    title: "Aura Glass Card",
+    title: "Glass Card",
     description:
-      "A semi-transparent backdrop-filter container for modern high-end dashboard interfaces.",
+      "A minimalist container designed to group and elevate related content with subtle borders.",
     category: "Cards Components",
-    component: GlassCard,
-    previewHeight: 160,
-    usage: `<GlassCard />`,
+    component: GlassSecureCard,
+    previewProps: {
+      title: "ToolKit Card",
+      children: "This is a modern animated card component.",
+    },
+    usage: `<Card title="Example">Content</Card>`,
     code: `
-import { motion } from "framer-motion"
-
-export default function GlassCard() {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      className="rounded-xl border border-white/10 bg-white/10 backdrop-blur-xl p-6 shadow-lg"
-    >
-      <h3 className="text-lg font-semibold text-white mb-2">
-        Revenue
-      </h3>
-
-      <p className="text-3xl font-bold text-white">$48,392</p>
-
-      <span className="text-sm text-green-400 mt-2 block">
-        +12% this month
-      </span>
-    </motion.div>
-  )
-}
-`,
+  export default function Card({ title, children }) {
+    return (
+      <div className="border border-neutral-200 rounded-xl p-6 bg-white shadow-sm">
+        <h3 className="font-semibold mb-2">{title}</h3>
+        <div className="text-neutral-600 text-sm">{children}</div>
+      </div>
+    )
+  }
+  `,
   },
-
-  productCard: {
-    title: "Product Card",
+  PricingCard: {
+    title: "Pricing Card",
     description:
-      "A clean e-commerce card layout featuring high-contrast typography and image containers.",
+      "A minimalist container designed to group and elevate related content with subtle borders.",
     category: "Cards Components",
-    component: ProductCard,
-    previewHeight: 200,
-    usage: `<ProductCard />`,
+    component: PricingHighlightCard,
+    previewProps: {
+      title: "ToolKit Card",
+      children: "This is a modern animated card component.",
+    },
+    usage: `<Card title="Example">Content</Card>`,
     code: `
-import { motion } from "framer-motion"
-
-export default function ProductCard() {
-  return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
-      className="group rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm hover:shadow-lg"
-    >
-      <div className="h-40 bg-neutral-100 flex items-center justify-center">
-        Preview
+  export default function Card({ title, children }) {
+    return (
+      <div className="border border-neutral-200 rounded-xl p-6 bg-white shadow-sm">
+        <h3 className="font-semibold mb-2">{title}</h3>
+        <div className="text-neutral-600 text-sm">{children}</div>
       </div>
-
-      <div className="p-5">
-        <h3 className="font-semibold text-neutral-900 mb-1">
-          Dashboard UI Kit
-        </h3>
-
-        <p className="text-sm text-neutral-500">
-          Beautiful dashboard components.
-        </p>
-      </div>
-    </motion.div>
-  )
-}
-`,
+    )
+  }
+  `,
   },
-
   /* TEXT ANIMATIONS */
   blurRevealText: {
     title: "Cinematic Blur Reveal",

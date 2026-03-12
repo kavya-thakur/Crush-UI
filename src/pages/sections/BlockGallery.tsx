@@ -4,10 +4,16 @@ import { Link } from "react-router-dom";
 import { blockRegistry } from "../../data/blockRegistry";
 
 export default function BlockGallery() {
-  const blocks = Object.entries(blockRegistry).map(([slug, data]) => ({
-    slug,
-    ...data,
-  }));
+  // const blocks = Object.entries(blockRegistry).map(([slug, data]) => ({
+  //   slug,
+  //   ...data,
+  // }));
+  const blocks = Object.entries(blockRegistry)
+    .map(([slug, data]) => ({
+      slug,
+      ...data,
+    }))
+    .slice(0, 6);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -28,8 +34,8 @@ export default function BlockGallery() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-20">
-      <header className="mb-16 max-w-4xl">
+    <div className="max-w-7xl mx-auto px-6 md:px-0 py-20">
+      <header className="mb-16">
         <h2 className="text-5xl font-medium tracking-tight text-gradient sm:text-6xl">
           Crush UI{" "}
         </h2>

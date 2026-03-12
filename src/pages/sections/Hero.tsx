@@ -7,6 +7,7 @@ import AnimatedTooltip from "../../components/app/AnimatedTooltip";
 import ReactIcon from "../../assets/react.svg?react";
 import TailwindIcon from "../../assets/tailwind.svg?react";
 import Motion from "../../assets/motion.svg?react";
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   // Performance: Memoize static data to prevent unnecessary re-renders
@@ -27,7 +28,9 @@ const Hero: React.FC = () => {
           className="relative inline-flex h-2 w-2 rounded-full bg-neutral-500"
           aria-hidden="true"
         ></span>{" "}
-        changelog - introducing KAVYASS template
+        <Link to={"/templates"}>
+          changelog - introducing Hire Agency template
+        </Link>
         <MoveRight size={14} />
       </div>
 
@@ -47,12 +50,17 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row justify-center w-full gap-5 items-center">
-        <button className="flex cursor-pointer bg-neutral-900 px-4 py-2 font-medium text-white shadow-[0px_0px_10px_0px_rgba(255,255,255,0.2)_inset] ring ring-white/20 ring-offset-2 ring-offset-neutral-900 transition-all duration-200 ring-inset hover:shadow-[0px_0px_20px_0px_rgba(255,255,255,0.4)_inset] hover:ring-white/40 active:scale-98 dark:bg-white dark:text-black dark:shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)_inset] dark:ring-black/20 dark:ring-offset-white dark:hover:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.3)_inset] dark:hover:ring-black/50 h-14 w-full items-center justify-center rounded-lg text-center text-base sm:w-52">
-          Explore Collection
-        </button>
-        <button className="flex h-14 w-full items-center justify-center rounded-lg border border-transparent bg-white text-base font-medium text-black shadow-sm ring-1 shadow-black/10 ring-black/10 transition duration-150 active:scale-98 sm:w-52 dark:border-neutral-600 dark:bg-black dark:text-white">
-          Unlock Unlimited Access
-        </button>
+        <Link to={"/components"}>
+          <button className="flex cursor-pointer bg-neutral-900 px-4 py-2 font-medium text-white shadow-[0px_0px_10px_0px_rgba(255,255,255,0.2)_inset] ring ring-white/20 ring-offset-2 ring-offset-neutral-900 transition-all duration-200 ring-inset hover:shadow-[0px_0px_20px_0px_rgba(255,255,255,0.4)_inset] hover:ring-white/40 active:scale-98 dark:bg-white dark:text-black dark:shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)_inset] dark:ring-black/20 dark:ring-offset-white dark:hover:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.3)_inset] dark:hover:ring-black/50 h-14 w-full items-center justify-center rounded-lg text-center text-base sm:w-52">
+            Explore Collection
+          </button>
+        </Link>
+
+        <Link to={"/pricing"}>
+          <button className=" cursor-pointer flex h-14 w-full items-center justify-center rounded-lg border border-transparent bg-white text-base font-medium text-black shadow-sm ring-1 shadow-black/10 ring-black/10 transition duration-150 active:scale-98 sm:w-52 dark:border-neutral-600 dark:bg-black dark:text-white">
+            Unlock Unlimited Access
+          </button>
+        </Link>
       </div>
 
       {/* SEO & Performance: Improved social proof layout to prevent mobile overflow */}

@@ -7,15 +7,20 @@ import HeroAgents from "../components/blocks/herosections/HeroAgent";
 import SimpleCTA from "../components/blocks/CTA/SimpleCTA";
 import JitterFooter from "../components/blocks/footers/JitterFooter";
 import LocalyzerFooter from "../components/blocks/footers/LocalyzerFooter";
-import HiringAgencyy, {
-  HiringAgency,
-} from "../components/templates/NewLanding";
+import { HiringAgency } from "../components/templates/NewLanding";
+import FullBentoGrid from "../pages/sections/ProductFeatures";
+import { TidescapeFooter } from "../components/blocks/footers/TidescapeFooter";
 
 /* TYPES */
 type BlockDoc = {
   title: string;
   description: string;
-  category: "Hero Sections" | "Marketing" | "Sections" | "Footer Sections"; // Added categories
+  category:
+    | "Hero Sections"
+    | "Marketing"
+    | "Sections"
+    | "Footer Sections"
+    | "Grids"; // Added categories
   component: ComponentType<any>;
   premium?: boolean;
   usage?: string;
@@ -137,7 +142,19 @@ export default Hero;`,
     usage: `<HeroGSAP />`,
     code: ``,
   },
-
+  
+  //grid
+  bentogrid: {
+    title: "Bento grid",
+    description:
+      "Cinematic hero section with clip-path image reveals and staggered text.",
+    category: "Grids",
+    component: FullBentoGrid,
+    previewHeight: 600,
+    dependencies: ["motion"],
+    usage: `<HeroGSAP />`,
+    code: ``,
+  },
   /* MARKETING / CTA CATEGORY */
   ctaBanner: {
     title: "CTA Creative Banner",
@@ -170,6 +187,17 @@ export default SimpleCTA;
 `,
   },
   // FOOTER
+  Tidescapefooter: {
+    title: "Animated Footer",
+    description:
+      "Cinematic hero section with clip-path image reveals and staggered text.",
+    category: "Footer Sections",
+    component: TidescapeFooter,
+    previewHeight: 600,
+    dependencies: ["motion"],
+    usage: `<HeroGSAP />`,
+    code: ``,
+  },
   JitterFooter: {
     title: "Modern Footer",
     description:

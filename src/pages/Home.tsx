@@ -20,6 +20,7 @@ const Home = () => {
       <BlockGallery />
       <OrbitingStack />
       <Footer />
+
       {/* <NotusLandingPage /> */}
     </div>
   );

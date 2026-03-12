@@ -26,7 +26,7 @@ const plans: Plan[] = [
   },
   {
     name: "Annual",
-    price: "$169",
+    price: "$19",
     description: "Full access billed yearly",
     button: "Get Annual Access",
     features: [
@@ -40,7 +40,7 @@ const plans: Plan[] = [
   },
   {
     name: "Lifetime",
-    price: "$199",
+    price: "$99",
     description: "One-time purchase",
     button: "Get Lifetime Access",
     popular: true,
@@ -49,19 +49,6 @@ const plans: Plan[] = [
       "Lifetime updates",
       "All future releases",
       "Private community access",
-      "Priority support",
-    ],
-  },
-  {
-    name: "Team",
-    price: "$1590",
-    description: "Best for teams",
-    button: "Get Team Access",
-    features: [
-      "10 team members included",
-      "All premium blocks",
-      "All templates",
-      "Lifetime updates",
       "Priority support",
     ],
   },
@@ -149,7 +136,7 @@ export default function Pricing() {
       </div>
 
       {/* Pricing Grid */}
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {plans.map((plan) => (
           <PricingCard key={plan.name} plan={plan} />
         ))}

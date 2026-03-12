@@ -28,25 +28,41 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 z-[100] w-full border-b border-zinc-200/50 bg-white/80 backdrop-blur-md transition-colors dark:border-white/5 dark:bg-[#030303]/80">
+    <nav className="fixed top-0 z-[100] w-full border-b border-zinc-200/50 bg-white/70 backdrop-blur-xl transition-all dark:border-white/5 dark:bg-[#030303]/70">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-10">
-        {/* Left: Logo & Desktop Links */}
-        <div className="flex items-center gap-8">
+        {/* Left: Brand & Navigation */}
+        <div className="flex items-center gap-10">
           <Link
             to="/"
-            className="flex items-center gap-2.5 transition-transform active:scale-95"
+            className="group flex items-center gap-3 active:scale-95 transition-transform"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-950 dark:bg-white transition-colors">
-              <span className="text-sm font-black text-white dark:text-black">
-                C
+            {/* THE LOGO: Triple Bar Shard */}
+            <div className="flex h-8 w-8 items-center justify-center rounded-[7px] bg-black dark:bg-white transition-colors group-hover:bg-zinc-800 dark:group-hover:bg-zinc-200">
+              <svg
+                viewBox="0 0 32 32"
+                className="h-5 w-5 text-white dark:text-black"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+              >
+                <path d="M11 22L21 10" />
+                <path d="M7 18L17 6" className="opacity-40" />
+                <path d="M15 26L25 14" className="opacity-40" />
+              </svg>
+            </div>
+
+            <div className="flex flex-col leading-none">
+              <span className="text-lg font-black tracking-[-0.05em] text-black dark:text-white uppercase">
+                Crush
+                <span className="font-light text-zinc-400 dark:text-zinc-500">
+                  UI
+                </span>
               </span>
             </div>
-            <span className="hidden text-[17px] font-bold tracking-tight text-zinc-900 dark:text-white sm:block">
-              Crush<span className="text-zinc-400">UI</span>
-            </span>
           </Link>
 
-          {/* Desktop Nav: Fluid Background Pill */}
+          {/* Desktop Nav */}
           <div
             className="hidden items-center gap-1 md:flex"
             onMouseLeave={() => setHoveredPath(null)}
@@ -58,27 +74,21 @@ export default function Navbar() {
                   key={link.path}
                   to={link.path}
                   onMouseEnter={() => setHoveredPath(link.path)}
-                  className={`relative px-4 py-2 text-[14px]  transition-colors duration-200 ${
+                  className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${
                     isActive || hoveredPath === link.path
-                      ? "text-zinc-950 dark:text-white"
+                      ? "text-black dark:text-white"
                       : "text-zinc-500"
                   }`}
                 >
                   <span className="relative z-10">{link.name}</span>
-
-                  {/* Shared Background Pill (Both Hover & Active) */}
                   {(hoveredPath === link.path || isActive) && (
                     <motion.div
-                      layoutId="navbar-pill"
-                      className={`absolute inset-0 z-0 rounded-full ${
-                        isActive
-                          ? "bg-zinc-100 dark:bg-white/10"
-                          : "bg-zinc-100/60 dark:bg-white/[0.05]"
-                      }`}
+                      layoutId="nav-pill"
+                      className="absolute inset-0 z-0 rounded-lg bg-zinc-100 dark:bg-white/10"
                       transition={{
                         type: "spring",
-                        bounce: 0.15,
-                        duration: 0.5,
+                        bounce: 0.2,
+                        duration: 0.6,
                       }}
                     />
                   )}
@@ -89,66 +99,64 @@ export default function Navbar() {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-4">
-          {/* Command Search Bar - Refined Style */}
+        <div className="flex items-center gap-5">
+          {/* Search Button: Aceternity Minimalist Style */}
           <button
             onClick={() =>
               window.dispatchEvent(
                 new KeyboardEvent("keydown", { key: "k", metaKey: true }),
               )
             }
-            className="group hidden h-9 w-64 items-center justify-between rounded-full border border-zinc-200 bg-zinc-50/50 px-3 transition-all hover:bg-white dark:border-white/10 dark:bg-zinc-900/40 dark:hover:bg-zinc-900 lg:flex"
+            className="group hidden h-10 w-64 items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 transition-all hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-900/40 dark:hover:border-white/20 lg:flex"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <Search
-                size={14}
-                className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors"
+                size={15}
+                className="text-zinc-400 group-hover:text-black dark:group-hover:text-white transition-colors"
               />
-              <span className="text-xs text-zinc-400">
+              <span className="text-[13px] text-zinc-400 group-hover:text-zinc-500 transition-colors">
                 Search components...
               </span>
             </div>
-            <kbd className="flex items-center gap-1 rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-[9px] font-bold text-zinc-400 dark:border-zinc-700 dark:bg-zinc-800">
-              <Command size={9} />K
-            </kbd>
+            <div className="flex items-center gap-1 rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-zinc-400 dark:border-zinc-700 dark:bg-zinc-800">
+              <Command size={10} />K
+            </div>
           </button>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <ThemeToggle />
-
-            {/* Mobile Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-500 transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 md:hidden"
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Content: Minimalist Stack */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute inset-x-0 top-full border-b border-zinc-200 bg-white/95 p-4 backdrop-blur-xl dark:border-white/5 dark:bg-[#030303]/95 md:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-b border-zinc-200 bg-white/95 backdrop-blur-xl dark:border-white/5 dark:bg-[#030303]/95 md:hidden"
           >
-            <div className="grid grid-cols-1 gap-1">
+            <div className="flex flex-col gap-1 p-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center gap-3 rounded-xl p-3.5 transition-all ${
+                  className={`flex items-center gap-4 rounded-xl p-4 transition-all ${
                     pathname.startsWith(link.path)
-                      ? "bg-zinc-100 dark:bg-white/10 text-zinc-950 dark:text-white"
+                      ? "bg-zinc-100 dark:bg-white/10 text-black dark:text-white"
                       : "text-zinc-500"
                   }`}
                 >
-                  <link.icon size={18} className="opacity-70" />
-                  <span className="text-[15px] font-semibold">{link.name}</span>
+                  <link.icon size={20} className="opacity-60" />
+                  <span className="text-base font-bold">{link.name}</span>
                 </Link>
               ))}
             </div>

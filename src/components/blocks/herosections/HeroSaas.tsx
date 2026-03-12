@@ -2,46 +2,66 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronRight } from "lucide-react";
-// import AnimatedButton from "./AnimatedButton";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-  },
-};
 
 const Hero = () => {
+  const heading = "AI-Powered Tech Career Finder.";
+  const words = heading.split(" ");
+
+  // Staggered Blur-In Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: 10, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.8 },
+    },
+  };
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-[#030303] flex flex-col items-center">
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] pointer-events-none">
-        <div className="absolute top-[-10%] left-[20%] w-[30%] h-[60%] rounded-full bg-zinc-100 dark:bg-zinc-800/20 blur-[120px]" />
+    <div className="relative min-h-[110vh] w-full overflow-hidden bg-white dark:bg-[#030303] flex flex-col items-center selection:bg-zinc-200 dark:selection:bg-zinc-800">
+      {/* 1. Technical Background Elements */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Grain Texture */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] brightness-100 contrast-150 [background-image:url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+        {/* Large Radial Glows */}
+        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80%] h-[60%] rounded-full bg-zinc-100 dark:bg-zinc-800/10 blur-[120px] mix-blend-multiply dark:mix-blend-screen" />
+
+        {/* Floating Grid (Aceternity style) */}
+        <div className="absolute inset-0 [background-image:radial-gradient(#e5e7eb_1px,transparent_1px)] dark:[background-image:radial-gradient(#161617_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
       </div>
 
       <motion.div
-        className="relative z-10 flex flex-col items-center mt-24 lg:mt-32 text-center px-6"
+        className="relative z-10 flex flex-col items-center mt-32 lg:mt-40 text-center px-6"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Shimmer Badge */}
+        {/* Shimmer Badge: Staggered Blur */}
         <motion.div
-          variants={itemVariants}
-          className="group flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 backdrop-blur-md mb-8 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors cursor-pointer"
+          variants={wordVariants}
+          className="group relative flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-200 dark:border-white/10 bg-white/50 dark:bg-white/[0.02] backdrop-blur-md mb-10 transition-all hover:border-zinc-300 dark:hover:border-white/20"
         >
-          <Sparkles size={12} className="text-zinc-400 fill-zinc-400/20" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400">
+          <Sparkles size={12} className="text-zinc-400 animate-pulse" />
+          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
             v2.0 is now live
           </span>
           <ChevronRight
@@ -50,42 +70,50 @@ const Hero = () => {
           />
         </motion.div>
 
-        {/* Heading */}
-        <motion.h1
-          className="max-w-4xl text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-tighter leading-[1.05] text-zinc-950 dark:text-white"
-          variants={itemVariants}
-        >
-          AI-Powered{" "}
-          <span className="text-zinc-400 dark:text-zinc-600">Tech</span> <br />
-          Career Finder.
-        </motion.h1>
+        {/* Heading: Staggered Word Reveal */}
+        <h1 className="max-w-4xl text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-[-0.05em] leading-[0.95] text-zinc-950 dark:text-white">
+          {words.map((word, i) => (
+            <motion.span
+              key={i}
+              variants={wordVariants}
+              className="inline-block mr-[0.2em] last:mr-0"
+            >
+              {word === "Career" ? (
+                <span className="text-zinc-400 dark:text-zinc-600 italic font-medium">
+                  {word}
+                </span>
+              ) : (
+                word
+              )}
+            </motion.span>
+          ))}
+        </h1>
 
-        {/* Subheading */}
+        {/* Subheading: Fade Up */}
         <motion.p
-          className="mt-8 max-w-xl text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400"
-          variants={itemVariants}
+          variants={fadeUpVariants}
+          className="mt-10 max-w-2xl text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 font-medium tracking-tight"
         >
           Discover your ideal tech career path with our{" "}
-          <span className="text-zinc-900 dark:text-zinc-100 font-medium">
+          <span className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-4">
             AI-driven
           </span>{" "}
-          platform. Built for the next generation of engineers.
+          platform. Built for the next generation of software engineers.
         </motion.p>
 
-        {/* CTA Section */}
+        {/* CTA Section: Magnetic Hover Feel */}
         <motion.div
-          className="mt-10 flex flex-col sm:flex-row items-center gap-4"
-          variants={itemVariants}
+          variants={fadeUpVariants}
+          className="mt-12 flex flex-col sm:flex-row items-center gap-6"
         >
-          {/* <Link to="/generate">
-            <AnimatedButton
-              text="Start Now"
-              bg="bg-black dark:bg-white"
-              textColor="text-white dark:text-black"
-            />
-          </Link> */}
-          <button className="group flex items-center gap-2 px-6 py-3 text-sm font-medium text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors">
-            Learn More
+          <Link to="/generate">
+            <button className="relative flex h-14 items-center justify-center rounded-xl bg-zinc-950 px-10 text-base font-bold text-white shadow-[0px_10px_20px_rgba(0,0,0,0.1)] transition-all hover:scale-[1.02] hover:bg-zinc-800 active:scale-[0.98] dark:bg-white dark:text-black dark:hover:bg-zinc-100">
+              Start Building
+            </button>
+          </Link>
+
+          <button className="group flex items-center gap-2 text-sm font-bold tracking-tight text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors">
+            View Components
             <ArrowRight
               size={16}
               className="group-hover:translate-x-1 transition-transform"
@@ -93,23 +121,33 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Mockup Frame */}
+        {/* Mockup Frame: Large Scale Entry */}
         <motion.div
-          variants={itemVariants}
-          className="mt-20 w-full max-w-5xl relative"
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 1.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-24 w-full max-w-6xl relative"
         >
-          <div className="relative rounded-[24px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden shadow-2xl shadow-black/5">
-            {/* Minimal Header */}
-            <div className="h-10 border-b border-zinc-100 dark:border-zinc-900 flex items-center px-4 gap-1.5 bg-zinc-50/50 dark:bg-zinc-900/50">
-              <div className="w-2 h-2 rounded-full bg-zinc-200 dark:bg-zinc-800" />
-              <div className="w-2 h-2 rounded-full bg-zinc-200 dark:bg-zinc-800" />
-            </div>
+          {/* Glass Card Effect */}
+          <div className="relative rounded-[32px] border border-zinc-200 dark:border-white/10 bg-white/50 dark:bg-zinc-900/50 p-2 backdrop-blur-2xl shadow-[0_40px_100px_rgba(0,0,0,0.1)] dark:shadow-none">
+            <div className="relative rounded-[24px] border border-zinc-200 dark:border-white/5 bg-white dark:bg-[#030303] overflow-hidden">
+              {/* Fake Browser Top Bar */}
+              <div className="h-12 border-b border-zinc-100 dark:border-white/5 flex items-center justify-between px-6 bg-zinc-50/50 dark:bg-zinc-900/50">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="w-3 h-3 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="w-3 h-3 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                </div>
+                <div className="h-5 w-32 rounded-md bg-zinc-100 dark:bg-zinc-800" />
+                <div className="w-4" />
+              </div>
 
-            <img
-              src="https://assets.aceternity.com/pro/landing/1.webp"
-              alt="Dashboard Preview"
-              className="w-full h-auto"
-            />
+              <img
+                src="https://assets.aceternity.com/pro/landing/1.webp"
+                alt="Dashboard Preview"
+                className="w-full h-auto grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
           </div>
         </motion.div>
       </motion.div>

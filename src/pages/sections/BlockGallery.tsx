@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import { blockRegistry } from "../../data/blockRegistry";
 
 export default function BlockGallery() {
-  // const blocks = Object.entries(blockRegistry).map(([slug, data]) => ({
-  //   slug,
-  //   ...data,
-  // }));
   const blocks = Object.entries(blockRegistry)
     .map(([slug, data]) => ({
       slug,
@@ -28,7 +24,7 @@ export default function BlockGallery() {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1]as const },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -58,7 +54,7 @@ export default function BlockGallery() {
           return (
             <motion.div key={block.slug} variants={itemVariants}>
               <Link
-                to={`/blocks/${block.slug}`}
+                to={`/blocks/category/${block.category?.toLowerCase().replace(/\s+/g, "-")}`}
                 className="group relative block h-full overflow-hidden rounded-[2.5rem] border border-zinc-200 bg-white p-3 transition-all duration-500 hover:border-zinc-400 dark:border-zinc-800 dark:bg-[#09090b] dark:hover:border-zinc-600"
               >
                 {/* 1. Live Preview Area (The "Mini-Stage") */}

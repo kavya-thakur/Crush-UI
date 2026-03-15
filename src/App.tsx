@@ -25,7 +25,6 @@ function App() {
             <Route path="/components" element={<Components />} />
             <Route path="/components/:slug" element={<ComponentPage />} />
             <Route path="/blocks" element={<Blocks />} />
-            <Route path="/blocks/:slug" element={<BlockPage />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/templates/:slug" element={<TemplatePage />} />
             <Route path="/pricing" element={<Pricing />} />

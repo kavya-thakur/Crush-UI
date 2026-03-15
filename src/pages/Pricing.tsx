@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 type Plan = {
   name: string;
@@ -8,6 +9,7 @@ type Plan = {
   button: string;
   popular?: boolean;
   features: string[];
+  link?: string;
 };
 
 const plans: Plan[] = [
@@ -23,6 +25,7 @@ const plans: Plan[] = [
       "Fully responsive",
       "Documentation included",
     ],
+    link: "/components",
   },
   {
     name: "Annual",
@@ -37,6 +40,7 @@ const plans: Plan[] = [
       "AI prompts for V0 & Lovable",
       "Priority support",
     ],
+    link: "",
   },
   {
     name: "Lifetime",
@@ -51,6 +55,7 @@ const plans: Plan[] = [
       "Private community access",
       "Priority support",
     ],
+    link: "",
   },
 ];
 
@@ -93,17 +98,17 @@ function PricingCard({ plan }: { plan: Plan }) {
           </span>
         </div>
       </div>
-
-      <button
-        className={`mb-8 rounded-lg px-4 py-2 text-sm font-medium transition active:scale-95
-        ${
-          plan.popular
-            ? "bg-white text-black hover:bg-neutral-200 dark:bg-zinc-900 dark:text-white"
-            : "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
-        }`}
+      <Link
+        to={`${plan.link}`}
+        className={`mb-8 flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all active:scale-[0.98] will-change-transform
+    ${
+      plan.popular
+        ? "bg-white text-black hover:bg-neutral-200 dark:bg-zinc-900 dark:text-white"
+        : "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
+    }`}
       >
         {plan.button}
-      </button>
+      </Link>
 
       <div className="space-y-3">
         {plan.features.map((feature) => (

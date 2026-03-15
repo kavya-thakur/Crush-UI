@@ -1,4 +1,3 @@
-import React from "react";
 import Hero from "./sections/Hero";
 import FeaturesGrid from "./sections/FeaturesGrid";
 import BrowserMockup from "./sections/BrowserMockup";

@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 
 /* BUTTONS */
 import Button from "../components/ui/button/Button";

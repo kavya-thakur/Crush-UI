@@ -1,5 +1,3 @@
-import React from "react";
-
 const PremiumNavbar = () => {
   return (
     <nav className="fixed inset-x-0 top-10 z-50 mx-auto hidden max-w-5xl items-center justify-between bg-white/80 px-4 py-2 backdrop-blur-md md:flex rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">

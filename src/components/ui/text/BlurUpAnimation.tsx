@@ -20,7 +20,6 @@ export default function BlurRevealText({
       filter: "blur(0px)",
       y: 0,
       transition: {
-        type: "spring",
         damping: 12,
         stiffness: 100,
       },

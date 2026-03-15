@@ -1,6 +1,5 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Play, ArrowRight, ShieldCheck, Zap } from "lucide-react";
+import { Play, ArrowRight, Zap } from "lucide-react";
 
 const HeroAgents = () => {
   const fadeUp = {
@@ -11,7 +10,7 @@ const HeroAgents = () => {
       transition: {
         delay: i * 0.1,
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     }),
   };

@@ -9,7 +9,7 @@ import { UltraPolishedCard } from "../ui/cards/MarqueCard";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible] = useState(true);
 
   const navLinks = [
     { name: "Why choose ISO", href: "#why" },
@@ -23,11 +23,11 @@ export const Navbar: React.FC = () => {
       initial={{ y: -100 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-0 right-0 z-[100] px-6 py-4"
+      className="fixed top-0 left-0 right-0 z-100 px-6 py-4"
     >
       <nav
         className={`
-        mx-auto max-w-7xl rounded-full transition-all duration-500 border bg-white backdrop-blur-md border-black/[0.05] shadow-[0_8px_32px_rgba(0,0,0,0.04)] px-6 py-2
+        mx-auto max-w-7xl rounded-full transition-all duration-500 border bg-white backdrop-blur-md border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.04)] px-6 py-2
       `}
       >
         <div className="flex items-center justify-between">
@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
                 </svg>
               </div>
             </a>
-            <div className="hidden lg:block w-[1px] h-6 bg-black/10" />
+            <div className="hidden lg:block w-px h-6 bg-black/10" />
 
             {/* Desktop Links */}
             <div className="hidden lg:flex items-center gap-8">
@@ -123,7 +123,7 @@ export const Navbar: React.FC = () => {
                   {link.name}
                 </a>
               ))}
-              <hr className="border-black/[0.05]" />
+              <hr className="border-black/5" />
               <a
                 href="#join-waitlist"
                 onClick={() => setMobileMenuOpen(false)}
@@ -450,8 +450,6 @@ export const WhySection: React.FC = () => {
 };
 
 export const WhoIsItFor: React.FC = () => {
-  const EASE_PREMIUM = [0.22, 1, 0.36, 1];
-
   const row1 = [
     {
       name: "Photographers",
@@ -612,7 +610,7 @@ const MarqueeRow = ({
   );
 };
 
-const EASE_PREMIUM = [0.22, 1, 0.36, 1];
+const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
 interface FeatureCard {
   id: string;
@@ -625,9 +623,6 @@ interface FeatureCard {
 
 export const FeaturesSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"hirer" | "talent">("hirer");
-
-  const bgGradient =
-    "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6901e53513dcf1ea037d2e38_bg-gradient.avif";
 
   const hirerFeatures: FeatureCard[] = [
     {

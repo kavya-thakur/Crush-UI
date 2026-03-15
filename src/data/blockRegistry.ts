@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 
 /* HERO */
 import Hero from "../components/blocks/herosections/HeroSaas";

@@ -2,14 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Youtube, Linkedin, Instagram } from "lucide-react";
 
-/**
- * Design Engineer Polish:
- * 1. Adaptive Theming: Uses 'dark:' prefix for seamless mode switching.
- * 2. Optical Alignment: Refined tracking and leading for typography.
- * 3. Motion: Added staggered reveal for the footer columns.
- * 4. Micro-interactions: Social icons now have a 'lift and glow' effect.
- */
-
 export default function JitterFooter() {
   const columns = [
     {

@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import {
   Layout,
@@ -12,10 +11,16 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ORBITS = [
-  { size: 750, duration: "20s", icons: [<Layout />, <Box />, <Cpu />] },
-  { size: 500, duration: "45s", icons: [<Layers />, <Zap />, <Code2 />] },
-  { size: 250, duration: "30s", icons: [<Component />, <MousePointer2 />] },
+import type { LucideIcon } from "lucide-react";
+
+const ORBITS: {
+  size: number;
+  duration: string;
+  icons: LucideIcon[];
+}[] = [
+  { size: 750, duration: "20s", icons: [Layout, Box, Cpu] },
+  { size: 500, duration: "45s", icons: [Layers, Zap, Code2] },
+  { size: 250, duration: "30s", icons: [Component, MousePointer2] },
 ];
 
 const OrbitingCTA = () => {
@@ -45,9 +50,10 @@ const OrbitingCTA = () => {
               animation: `orbit ${orbit.duration} linear infinite`,
             }}
           >
-            {orbit.icons.map((icon, iconIdx) => {
+            {orbit.icons.map((Icon, iconIdx) => {
               const angle = (360 / orbit.icons.length) * iconIdx;
               const radius = orbit.size / 2;
+
               return (
                 <div
                   key={iconIdx}
@@ -56,18 +62,14 @@ const OrbitingCTA = () => {
                     transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(${radius}px)`,
                   }}
                 >
-                  {/* Icon Card: Matching the Screenshot's White Square look */}
                   <div
-                    className="flex size-16 items-center justify-center rounded-2xl border border-zinc-100 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.04)] dark:border-zinc-800 dark:bg-zinc-900/80 dark:backdrop-blur-md"
+                    className="flex size-16 items-center justify-center rounded-2xl border border-zinc-100 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.04)] dark:border-zinc-800 dark:bg-zinc-900/80"
                     style={{
                       animation: `counter-orbit ${orbit.duration} linear infinite`,
                     }}
                   >
                     <div className="text-zinc-400 dark:text-zinc-500">
-                      {React.cloneElement(icon as React.ReactElement, {
-                        size: 24,
-                        strokeWidth: 1.2,
-                      })}
+                      <Icon size={24} strokeWidth={1.2} />
                     </div>
                   </div>
                 </div>

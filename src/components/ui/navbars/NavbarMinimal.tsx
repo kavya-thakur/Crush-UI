@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const AnimatedLinkText = ({ text }) => {
+type AnimatedLinkTextProps = {
+  text: string;
+};
+const AnimatedLinkText = ({ text }: AnimatedLinkTextProps) => {
   const [hovered, setHovered] = useState(false);
 
   return (

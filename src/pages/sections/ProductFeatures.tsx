@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 // --- Sub-components for cleaner JSX ---

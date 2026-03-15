@@ -1,6 +1,3 @@
-import React from "react";
-import { motion } from "framer-motion";
-
 export default function RegistryFooter() {
   return (
     <footer className="mt-20 border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-[#09090b]">

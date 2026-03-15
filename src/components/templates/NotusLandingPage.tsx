@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dashboard from "../../assets/template/dashboard.webp";
 import {
@@ -12,20 +12,23 @@ import {
   Cpu,
   Check,
   ChevronDown,
-  Paperclip,
-  Send,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const NotusLandingPage = () => {
-  const [billingCycle, setBillingCycle] = useState("monthly");
-  const [openIndex, setOpenIndex] = useState(null);
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
+    "monthly",
+  );
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // DATA CONFIGS
-  const ORBITS = [
-    { size: 750, duration: "20s", icons: [<Layout />, <Box />, <Cpu />] },
-    { size: 500, duration: "45s", icons: [<Layers />, <Zap />, <Code2 />] },
-    { size: 250, duration: "30s", icons: [<Component />, <MousePointer2 />] },
+  const ORBITS: {
+    size: number;
+    duration: string;
+    icons: LucideIcon[];
+  }[] = [
+    { size: 750, duration: "20s", icons: [Layout, Box, Cpu] },
+    { size: 500, duration: "45s", icons: [Layers, Zap, Code2] },
+    { size: 250, duration: "30s", icons: [Component, MousePointer2] },
   ];
 
   const LOGOS = [
@@ -326,7 +329,7 @@ const NotusLandingPage = () => {
               Simple and Feasible Pricing
             </h2>
             <div className="mt-8 flex bg-[#f9f9f9] border border-[#eaedf1] p-1 rounded-xl">
-              {["monthly", "yearly"].map((mode) => (
+              {(["monthly", "yearly"] as const).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setBillingCycle(mode)}
@@ -478,7 +481,13 @@ const LogoIcon = () => (
   </div>
 );
 
-const ModelRow = ({ name, status, active }) => (
+type ModelRowProps = {
+  name: string;
+  status: string;
+  active?: boolean;
+};
+
+const ModelRow = ({ name, status, active }: ModelRowProps) => (
   <div className="flex items-center justify-between text-sm">
     <div className="flex items-center gap-2">
       <div
@@ -490,7 +499,12 @@ const ModelRow = ({ name, status, active }) => (
   </div>
 );
 
-const FooterCol = ({ title, links }) => (
+type FooterColProps = {
+  title: string;
+  links: string[];
+};
+
+const FooterCol = ({ title, links }: FooterColProps) => (
   <div className="flex flex-col gap-4">
     <h4 className="font-medium text-sm">{title}</h4>
     {links.map((l) => (

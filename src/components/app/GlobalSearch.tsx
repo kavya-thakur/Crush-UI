@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,39 +7,64 @@ import { componentRegistry } from "../../data/componentRegistry";
 import { blockRegistry } from "../../data/blockRegistry";
 import { templateRegistry } from "../../data/templateRegistry";
 
+type ItemType = "component" | "block" | "template";
+
 type Item = {
   name: string;
   path: string;
-  type: "component" | "block" | "template";
+  type: ItemType;
 };
 
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
-  const items: Item[] = [
-    ...Object.entries(componentRegistry).map(([slug, c]) => ({
-      name: c.title,
-      path: `/components/${slug}`,
-      type: "component",
-    })),
+  /* ------------------------------------------------ */
+  /* Build Search Index                               */
+  /* ------------------------------------------------ */
 
-    ...Object.entries(blockRegistry).map(([slug, b]) => ({
+  const items: Item[] = useMemo(() => {
+    const componentItems: Item[] = Object.entries(componentRegistry).map(
+      ([slug, c]) => ({
+        name: c.title,
+        path: `/components/${slug}`,
+        type: "component",
+      }),
+    );
+
+    const blockItems: Item[] = Object.entries(blockRegistry).map(([, b]) => ({
       name: b.title,
-      path: `/blocks/category/${b.category?.toLowerCase().replace(/\s+/g, "-")}`,
+      path: `/blocks/category/${b.category
+        ?.toLowerCase()
+        .replace(/\s+/g, "-")}`,
       type: "block",
-    })),
+    }));
 
-    ...Object.entries(templateRegistry).map(([slug, t]) => ({
-      name: t.title,
-      path: `/templates/${slug}`,
-      type: "template",
-    })),
-  ];
+    const templateItems: Item[] = Object.entries(templateRegistry).map(
+      ([slug, t]) => ({
+        name: t.title,
+        path: `/templates/${slug}`,
+        type: "template",
+      }),
+    );
 
-  const results = items.filter((item) =>
-    item.name.toLowerCase().includes(query.toLowerCase()),
-  );
+    return [...componentItems, ...blockItems, ...templateItems];
+  }, []);
+
+  /* ------------------------------------------------ */
+  /* Filter Results                                   */
+  /* ------------------------------------------------ */
+
+  const results = useMemo(() => {
+    if (!query) return items;
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase()),
+    );
+  }, [query, items]);
+
+  /* ------------------------------------------------ */
+  /* Keyboard Shortcut (⌘K / Ctrl K)                  */
+  /* ------------------------------------------------ */
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -55,7 +80,6 @@ export default function GlobalSearch() {
 
   return (
     <>
-      {/* SEARCH MODAL */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -70,7 +94,7 @@ export default function GlobalSearch() {
               onClick={() => setOpen(false)}
             />
 
-            {/* panel */}
+            {/* search panel */}
             <motion.div
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -78,9 +102,10 @@ export default function GlobalSearch() {
               transition={{ type: "spring", bounce: 0.2 }}
               className="relative w-[600px] max-w-[90vw] rounded-2xl border border-zinc-200 bg-white shadow-xl dark:border-white/10 dark:bg-[#030303]"
             >
-              {/* input */}
+              {/* search input */}
               <div className="flex items-center gap-3 border-b border-zinc-200 px-4 py-3 dark:border-white/10">
                 <Search size={16} className="text-zinc-400" />
+
                 <input
                   autoFocus
                   placeholder="Search components, blocks, templates..."
@@ -96,9 +121,9 @@ export default function GlobalSearch() {
                   <p className="p-4 text-sm text-zinc-400">No results found.</p>
                 )}
 
-                {results.map((item, i) => (
+                {results.map((item, index) => (
                   <Link
-                    key={i}
+                    key={`${item.type}-${index}`}
                     to={item.path}
                     onClick={() => setOpen(false)}
                     className="flex items-center justify-between px-4 py-3 text-sm transition hover:bg-zinc-50 dark:hover:bg-white/5"

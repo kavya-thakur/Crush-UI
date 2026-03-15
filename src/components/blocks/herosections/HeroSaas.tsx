@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronRight } from "lucide-react";
@@ -22,7 +21,7 @@ const Hero = () => {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -31,7 +30,11 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.8 },
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const,
+        delay: 0.8,
+      },
     },
   };
 
@@ -71,15 +74,15 @@ const Hero = () => {
         </motion.div>
 
         {/* Heading: Staggered Word Reveal */}
-        <h1 className="max-w-4xl text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-[-0.05em] leading-[0.95] text-zinc-950 dark:text-white">
+        <h1 className="max-w-4xl text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-[-0.05em] leading-[0.95] [text-shadow:0px_1px_3px_rgba(27,37,80,0.14)] ">
           {words.map((word, i) => (
             <motion.span
               key={i}
               variants={wordVariants}
-              className="inline-block mr-[0.2em] last:mr-0"
+              className="inline-block mr-[0.2em] last:mr-0 text-gradient"
             >
               {word === "Career" ? (
-                <span className="text-zinc-400 dark:text-zinc-600 italic font-medium">
+                <span className="text-zinc-400 dark:text-zinc-600 font-serif font-medium ">
                   {word}
                 </span>
               ) : (
@@ -92,7 +95,7 @@ const Hero = () => {
         {/* Subheading: Fade Up */}
         <motion.p
           variants={fadeUpVariants}
-          className="mt-10 max-w-2xl text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 font-medium tracking-tight"
+          className="mt-10 max-w-2xl text-base md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400  tracking-tight"
         >
           Discover your ideal tech career path with our{" "}
           <span className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-4">

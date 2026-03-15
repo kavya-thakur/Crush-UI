@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 import NotusLandingPage from "../components/templates/NotusLandingPage";
 import HiringAgencyy from "../components/templates/NewLanding";
 
@@ -28,7 +28,7 @@ export default function Page() {
 `,
   },
   hiringAgency: {
-    title: "Notus SaaS",
+    title: "Hiring Agency",
     description:
       "Complete SaaS landing page with hero, features, pricing and CTA.",
     component: HiringAgencyy,

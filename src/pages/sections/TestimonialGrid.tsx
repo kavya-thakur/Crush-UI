@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 const FAKE_TESTIMONIALS = [
@@ -100,8 +99,18 @@ const FAKE_TESTIMONIALS = [
     delay: 0.4,
   },
 ];
+type Testimonial = {
+  name: string;
+  handle: string;
+  avatar: string;
+  content: string;
+  delay: number;
+};
+type TestimonialCardProps = {
+  item: Testimonial;
+};
 
-const TestimonialCard = ({ item }) => {
+const TestimonialCard = ({ item }: TestimonialCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -178,11 +187,9 @@ const AnimatedTestimonials = () => {
         </div>
 
         {/* Masonry Layout */}
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4">
-          {FAKE_TESTIMONIALS.map((testimonial, idx) => (
-            <TestimonialCard key={idx} item={testimonial} />
-          ))}
-        </div>
+        {FAKE_TESTIMONIALS.map((item: Testimonial, idx) => (
+          <TestimonialCard key={idx} item={item} />
+        ))}
       </div>
     </section>
   );

@@ -1,5 +1,3 @@
-import React from "react";
-
 const SimpleCTA = () => {
   return (
     <section id="contact" className="  py-20 px-6 mx-auto ">

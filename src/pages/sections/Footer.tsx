@@ -1,4 +1,11 @@
+import { Link } from "react-router-dom";
+
 export default function RegistryFooter() {
+  const links = [
+    { label: "All Components", path: "components" },
+    { label: "UI Blocks", path: "blocks" },
+    { label: "Templates", path: "templates" },
+  ];
   return (
     <footer className="mt-20 border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-[#09090b]">
       {/* Top Section: Main Navigation Grid */}
@@ -21,14 +28,14 @@ export default function RegistryFooter() {
               Registry
             </h3>
             <ul className="space-y-3">
-              {["All Components", "UI Blocks", "Templates"].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+              {links.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={`/${item.path}`}
                     className="text-sm text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-100"
                   >
-                    {link}
-                  </a>
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>

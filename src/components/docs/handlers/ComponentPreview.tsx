@@ -17,7 +17,7 @@ export default function ComponentPreview({
       {/* FIX 1: Changed items-start to items-center 
           FIX 2: Added min-h-[450px] to give the "Luxury" cards room to breathe
       */}
-      <div className="relative z-10 w-full min-h-[250px] max-h-[600px] overflow-hidden flex items-center justify-center custom-scrollbar">
+      <div className="relative z-10 w-full min-h-[450px] md:min-h-[250px] max-h-[600px] overflow-hidden flex items-center justify-center custom-scrollbar">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

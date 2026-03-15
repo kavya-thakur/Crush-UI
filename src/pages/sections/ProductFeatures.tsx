@@ -143,7 +143,7 @@ const FullBentoGrid = () => {
               </p>
             </div>
             <div className="w-1/2 h-full flex items-center justify-center gap-4 p-4">
-              {[0.6, 1, 0.8].map((s, i) => (
+              {[0.6, 1, 0.8].map((_, i) => (
                 <motion.div
                   key={i}
                   animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.6, 0.3] }}

@@ -858,10 +858,9 @@ export const JoinWaitlist: React.FC = () => {
   const y5 = useTransform(scrollYProgress, [0, 1], ["30%", "-10%"]);
   const y6 = useTransform(scrollYProgress, [0, 1], ["-20%", "40%"]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = () => {
     setStatus("loading");
-    // The form action from your code: https://isomeet.us20.list-manage.com/subscribe/post...
-    // In a real React setup, you'd use fetch/jsonp, but we'll simulate the premium transition:
+
     setTimeout(() => setStatus("success"), 1500);
   };
 

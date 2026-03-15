@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LockKeyhole, Maximize, Maximize2 } from "lucide-react";
 import CodeBlock from "../CodeBlock";
-import PremiumGate from "../../app/PremiumGate";
 import PremiumCodeGuard from "../../app/PremiumCodeGuard";
 
 type Props = {

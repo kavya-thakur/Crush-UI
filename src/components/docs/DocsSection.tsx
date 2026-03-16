@@ -14,31 +14,42 @@ export default function DocsSection({
   if (!installation && !usage && !dependencies?.length) return null;
 
   return (
-    <div className="mt-20 space-y-16 border-t border-zinc-100 dark:border-zinc-800/50 pt-16">
+    <div className="mx-auto space-y-10 py-12">
+      {/* Installation Section */}
       {installation && (
-        <section className="space-y-6">
-          <h2 className="text-xl font-medium text-zinc-700 dark:text-white">
-            Installation
-          </h2>
-          <CodeBlock code={installation} />
+        <section className="space-y-4">
+          <div className="flex items-center gap-4">
+            <h2 className="text-[13px] font-medium tracking-[0.1em] text-zinc-400 uppercase dark:text-zinc-500">
+              Installation
+            </h2>
+            <div className="h-px flex-1 bg-zinc-100 dark:bg-white/[0.03]" />
+          </div>
+          <CodeBlock code={installation} language="bash" />
         </section>
       )}
 
+      {/* Usage Section */}
       {usage && (
-        <section className="space-y-6">
-          <h2 className="text-xl font-medium text-zinc-700 dark:text-white">
-            Usage
-          </h2>
-          <CodeBlock code={usage} />
+        <section className="space-y-4">
+          <div className="flex items-center gap-4">
+            <h2 className="text-[13px] font-medium tracking-[0.1em] text-zinc-400 uppercase dark:text-zinc-500">
+              Usage
+            </h2>
+            <div className="h-px flex-1 bg-zinc-100 dark:bg-white/[0.03]" />
+          </div>
+          <CodeBlock code={usage} language="tsx" />
         </section>
       )}
 
+      {/* Dependencies Section - Explicitly Bash */}
       {dependencies?.length && (
-        <section className="space-y-6">
-          <h2 className="text-xl font-medium text-zinc-700 dark:text-white">
-            Dependencies
-          </h2>
-
+        <section className="space-y-4">
+          <div className="flex items-center gap-4">
+            <h2 className="text-[13px] font-medium tracking-[0.1em] text-zinc-400 uppercase dark:text-zinc-500">
+              Dependencies
+            </h2>
+            <div className="h-px flex-1 bg-zinc-100 dark:bg-white/[0.03]" />
+          </div>
           <CodeBlock
             code={`npm install ${dependencies.join(" ")}`}
             language="bash"

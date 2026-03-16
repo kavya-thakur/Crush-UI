@@ -109,10 +109,8 @@ export default function ComponentPage() {
                   <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
                 </div>
 
-                <div className="h-[500px] md:h-[650px] w-full overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-[#0d0d0e] shadow-2xl">
-                  <div className="h-full overflow-y-auto custom-scrollbar p-4">
-                    <CodeBlock code={componentData.code || ""} language="tsx" />
-                  </div>
+                <div className="h-full overflow-y-auto custom-scrollbar">
+                  <CodeBlock code={componentData.code || ""} language="tsx" />
                 </div>
               </motion.div>
             )}

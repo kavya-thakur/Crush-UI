@@ -79,7 +79,7 @@ export default function CodeBlock({
         language={language as any}
       >
         {({ tokens, getLineProps, getTokenProps }) => (
-          <pre className="overflow-x-auto px-1 py-4 text-[13px] leading-[1.6] scrollbar-hide">
+          <pre className="overflow-x-auto overflow-y-auto max-h-[40rem] px-1 py-4 text-[13px] leading-[1.6] scrollbar-hide">
             {tokens.map((line, i) => (
               <div
                 key={i}

@@ -20,6 +20,8 @@ import { localyzerFooterCode } from "../snippets/blocks/footer/LocalyzerFooterCo
 // GRID
 import BentoGrid from "../components/blocks/Grids/BentoGrid";
 import { bentoGridCode } from "../snippets/blocks/grid/bentoGridCode";
+import MarqueeTestimonials from "../components/blocks/testimonials/MarqueeTestimonials";
+import { marqueTestimonialsCode } from "../snippets/blocks/testimonials/marqueTestimonialsCode";
 
 /* TYPES */
 type BlockDoc = {
@@ -30,13 +32,14 @@ type BlockDoc = {
     | "Marketing"
     | "Sections"
     | "Footer Sections"
-    | "Grids"; // Added categories
+    | "Testimonials"
+    | "Grids";
   component: ComponentType<any>;
   premium?: boolean;
   usage?: string;
   code?: string;
   previewHeight?: number;
-  dependencies?: string[] | undefined; // Good for user experience
+  dependencies?: string[] | undefined;
 };
 
 export const blockRegistry: Record<string, BlockDoc> = {
@@ -98,6 +101,17 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 480,
     usage: `<SimpleCTA />`,
     code: simpleCTACode,
+  },
+  //TESTIMONIALS
+  marqueTestimonials: {
+    title: "Marque Testimonials",
+    description: "",
+    category: "Testimonials",
+    component: MarqueeTestimonials,
+    previewHeight: 600,
+    dependencies: ["motion"],
+    usage: `<MarqueeTestimonials />`,
+    code: marqueTestimonialsCode,
   },
   // FOOTER
   Tidescapefooter: {

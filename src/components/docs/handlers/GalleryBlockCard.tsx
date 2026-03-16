@@ -85,7 +85,7 @@ export default function GalleryBlockCard({
               {block.premium ? (
                 <PremiumCodeGuard />
               ) : (
-                <div className="p-6">
+                <div className="">
                   <CodeBlock code={block.code || ""} language="tsx" />
                 </div>
               )}

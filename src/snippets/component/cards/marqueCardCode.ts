@@ -1,4 +1,5 @@
-import React from "react";
+export const marqueCardCode = `
+ import React from "react";
 import { motion, type Variants } from "framer-motion";
 
 const containerVariants: Variants = {
@@ -105,4 +106,5 @@ export const MarqueCard: React.FC = () => {
       </motion.div>
     </div>
   );
-};
+}
+`;

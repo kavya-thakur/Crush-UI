@@ -1,3 +1,4 @@
+export const localyzerFooterCode = `
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function LocalyzerFooter() {
@@ -58,11 +59,11 @@ export default function LocalyzerFooter() {
               {navLinks.map((item, idx) => (
                 <motion.a
                   key={item}
-                  href={`#${item.toLowerCase()}`}
+           href={\`#\${item.toLowerCase()}\`}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  className={`relative overflow-hidden transition-colors hover:text-[#00a89e] dark:hover:text-[#00d9cc]`}
+                  className={\`relative overflow-hidden transition-colors hover:text-[#00a89e] dark:hover:text-[#00d9cc]\`}
                 >
                   {item}
                 </motion.a>
@@ -131,3 +132,5 @@ function SocialButton({ platform }: { platform: string }) {
     </motion.a>
   );
 }
+
+`;

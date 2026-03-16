@@ -1,4 +1,5 @@
-import React from "react";
+export const analyticsCardCode = `
+  import React from "react";
 import { motion, type Variants } from "framer-motion";
 
 const cardVariants: Variants = {
@@ -13,7 +14,7 @@ const cardVariants: Variants = {
 const barVariants: Variants = {
   initial: { height: 0 },
   animate: (height: number) => ({
-    height: `${height}px`,
+    height: \`\${height}px\`,
     transition: { duration: 1, ease: [0.33, 1, 0.68, 1] },
   }),
 };
@@ -74,3 +75,4 @@ export const AnalyticsCard: React.FC = () => {
     </div>
   );
 };
+`;

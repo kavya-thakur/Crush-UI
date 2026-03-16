@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 
-// --- Sub-components for cleaner JSX ---
-
 const TechnicalGrid = () => (
   <div
     className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.1] pointer-events-none 
@@ -11,7 +9,7 @@ const TechnicalGrid = () => (
   />
 );
 
-const FullBentoGrid = () => {
+const BentoGrid = () => {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 bg-white dark:bg-[#030303] selection:bg-zinc-900 selection:text-white">
       {/* Editorial Header */}
@@ -163,4 +161,4 @@ const FullBentoGrid = () => {
   );
 };
 
-export default FullBentoGrid;
+export default BentoGrid;

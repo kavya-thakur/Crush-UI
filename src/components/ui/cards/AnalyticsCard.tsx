@@ -18,7 +18,7 @@ const barVariants: Variants = {
   }),
 };
 
-export const BentoAnalyticsCard: React.FC = () => {
+export const AnalyticsCard: React.FC = () => {
   return (
     /* The key to centering is the parent's flex properties */
     <div className="flex items-center justify-center w-full">

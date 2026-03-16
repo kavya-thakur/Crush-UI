@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 import Sidebar from "../components/layout/Sidebar";
 import { blockRegistry } from "../data/blockRegistry";
 import Breadcrumbs from "../components/app/Breadcrumbs";

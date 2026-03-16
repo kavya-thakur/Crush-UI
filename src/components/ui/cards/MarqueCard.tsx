@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, type Variants } from "framer-motion";
 
-// 1. Explicitly Type the Variants for TS
 const containerVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {

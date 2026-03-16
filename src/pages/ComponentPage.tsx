@@ -8,6 +8,7 @@ import CodeBlock from "../components/docs/CodeBlock";
 import Breadcrumbs from "../components/app/Breadcrumbs";
 import DocsTabs from "../components/docs/DocsTabs";
 import ComponentPreview from "../components/docs/handlers/ComponentPreview";
+import DocsSection from "../components/docs/DocsSection";
 
 type ComponentSlug = keyof typeof componentRegistry;
 
@@ -118,25 +119,11 @@ export default function ComponentPage() {
           </AnimatePresence>
 
           {/* Docs Sections */}
-          <div className="mt-20 space-y-16 border-t border-zinc-100 dark:border-zinc-800/50 pt-16">
-            {componentData.installation && (
-              <section className="space-y-6">
-                <h2 className="text-xl font-bold text-zinc-950 dark:text-white">
-                  Installation
-                </h2>
-                <CodeBlock code={componentData.installation} />
-              </section>
-            )}
-
-            {componentData.usage && (
-              <section className="space-y-6">
-                <h2 className="text-xl font-bold text-zinc-950 dark:text-white">
-                  Usage
-                </h2>
-                <CodeBlock code={componentData.usage} />
-              </section>
-            )}
-          </div>
+          <DocsSection
+            installation={componentData.installation}
+            usage={componentData.usage}
+            dependencies={componentData.dependencies}
+          />
         </div>
       </main>
     </div>

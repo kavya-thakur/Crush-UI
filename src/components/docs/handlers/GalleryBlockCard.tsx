@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LockKeyhole, Maximize, Maximize2 } from "lucide-react";
+import { Maximize2 } from "lucide-react";
 import CodeBlock from "../CodeBlock";
 import PremiumCodeGuard from "../../app/PremiumCodeGuard";
+import DocsTabs from "../DocsTabs";
 
 type Props = {
   block: any;
@@ -33,35 +34,8 @@ export default function GalleryBlockCard({
 
         <div className="flex items-center gap-3">
           {/* Tabs */}
-          <div className="flex bg-zinc-100 dark:bg-zinc-800 p-1 rounded-md border border-zinc-200 dark:border-zinc-700">
-            {["preview", "code"].map((t) => {
-              const isLocked = t === "code" && block.premium;
 
-              return (
-                <button
-                  key={t}
-                  onClick={() => setTab(t as "preview" | "code")}
-                  className={`px-4 py-1.5 rounded-md text-xs flex items-center font-semibold capitalize transition ${
-                    tab === t
-                      ? "bg-white dark:bg-zinc-900 text-black dark:text-white shadow-sm"
-                      : "text-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 dark:text-zinc-300"
-                  }`}
-                >
-                  {isLocked ? (
-                    <span className="mr-1">
-                      <LockKeyhole size={14} />
-                    </span>
-                  ) : (
-                    <span className="mr-1">
-                      <Maximize size={14} />
-                    </span>
-                  )}
-                  {t}
-                </button>
-              );
-            })}
-          </div>
-
+          <DocsTabs tab={tab} setTab={setTab} isPremium={block.premium} />
           {/* Fullscreen */}
           <button
             onClick={() => onFullPreview(slug)}

@@ -7,7 +7,7 @@ const LogoIcon = () => (
   </div>
 );
 
-const PremiumNavbar = () => {
+const NavbarSaas = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <nav className="fixed top-6 left-1/2 z-[100] flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between rounded-[1.25rem] border border-[#eaedf1] bg-white/80 px-6 py-3 backdrop-blur-md shadow-sm transition-all md:px-8">
@@ -101,4 +101,4 @@ const PremiumNavbar = () => {
   );
 };
 
-export default PremiumNavbar;
+export default NavbarSaas;

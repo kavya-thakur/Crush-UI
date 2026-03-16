@@ -142,7 +142,7 @@ export default Hero;`,
     usage: `<HeroGSAP />`,
     code: ``,
   },
-  
+
   //grid
   bentogrid: {
     title: "Bento grid",

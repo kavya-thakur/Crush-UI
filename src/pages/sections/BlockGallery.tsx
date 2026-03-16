@@ -29,7 +29,7 @@ export default function BlockGallery() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-0 pb-24">
+    <div className="max-w-7xl mx-auto px-6 xl:px-0 pb-24">
       <header className="mb-16">
         <h2 className="text-5xl font-medium tracking-tight text-gradient sm:text-6xl">
           Crush UI{" "}
@@ -60,7 +60,7 @@ export default function BlockGallery() {
                 {/* 1. Live Preview Area (The "Mini-Stage") */}
                 <div className="relative aspect-[16/10] overflow-hidden rounded-[1.8rem] bg-zinc-50 dark:bg-zinc-950 ring-1 ring-zinc-200/50 dark:ring-zinc-800/50">
                   {/* Technical Background Grid */}
-                  <div className="absolute inset-0 z-10 opacity-[0.2] dark:opacity-[0.4] [background-image:radial-gradient(#e5e7eb_1px,transparent_1px)] dark:[background-image:radial-gradient(#161617_1px,transparent_1px)] [background-size:20px_20px]" />
+                  <div className="absolute inset-0 z-10 opacity-[0.2] dark:opacity-[0.4] [background-image:radial-gradient(#e5e7eb_1px,transparent_1px)] dark:[background-image:radial-gradient(#161617_1px,transparent_1px)] bg-size-[20px_20px]" />
 
                   {/* Live Render (Scaled down significantly) */}
                   <div className="absolute inset-0 z-20 origin-top-left scale-[0.25] w-[400%] h-[400%] pointer-events-none transition-transform duration-700 group-hover:scale-[0.27]">

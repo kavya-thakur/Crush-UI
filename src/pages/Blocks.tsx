@@ -2,9 +2,13 @@ import Sidebar from "../components/layout/Sidebar";
 import BlocksGrid from "../components/docs/handlers/BlocksGrid";
 import { useBlockCategories } from "../hooks/useBlockCategories";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 export default function Blocks() {
   const categories = useBlockCategories();
+
+  // Stabilize reference
+  const memoizedCategories = useMemo(() => categories, [categories]);
 
   return (
     <div className="mx-auto flex max-w-[1440px]">
@@ -35,7 +39,7 @@ export default function Blocks() {
           </header>
 
           {/* Grid */}
-          <BlocksGrid categories={categories} />
+          <BlocksGrid categories={memoizedCategories} />
         </div>
       </main>
     </div>

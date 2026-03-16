@@ -1,23 +1,29 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import React from "react";
 
-export default function ComponentCard({ slug, component, index }: any) {
+function ComponentCard({ slug, component, index }: any) {
   const PreviewComponent = component.component;
 
-  // 1. TASTE: Define scale and alignment based on category
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "200px",
+  });
+
+  // SAME logic as before
   const isNavigation = component.category?.toLowerCase().includes("navigation");
   const isCard = component.category?.toLowerCase().includes("cards");
   const isText = component.category?.toLowerCase().includes("text");
 
-  // Determine scaling factors
-  let scale = 1; // Default for buttons
+  let scale = 1;
   let frameWidth = "1000px";
   let frameHeight = "600px";
 
   if (isNavigation) {
     scale = 0.28;
     frameWidth = "1200px";
-    frameHeight = "200px"; // Navbars don't need much height
+    frameHeight = "200px";
   } else if (isCard) {
     scale = 0.42;
     frameWidth = "600px";
@@ -30,6 +36,7 @@ export default function ComponentCard({ slug, component, index }: any) {
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -61,15 +68,16 @@ export default function ComponentCard({ slug, component, index }: any) {
                 className="transform-gpu"
                 style={{ transform: `scale(${scale})` }}
               >
-                {/* DYNAMIC FRAME: Fits the component based on its type */}
                 <div
                   className=""
                   style={{ width: frameWidth, height: frameHeight }}
                 >
-                  {PreviewComponent && (
+                  {inView && PreviewComponent ? (
                     <div className="w-full h-full flex items-center justify-center">
                       <PreviewComponent {...component.previewProps} />
                     </div>
+                  ) : (
+                    <div className="w-full h-full bg-zinc-100 dark:bg-zinc-800 animate-pulse rounded-xl" />
                   )}
                 </div>
               </div>
@@ -84,7 +92,7 @@ export default function ComponentCard({ slug, component, index }: any) {
           </div>
         </div>
 
-        {/* --- Metadata Section --- */}
+        {/* Metadata */}
         <div className="mt-5 px-2">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-bold tracking-tight text-zinc-800 transition-colors group-hover:text-black dark:text-zinc-200 dark:group-hover:text-white">
@@ -102,3 +110,5 @@ export default function ComponentCard({ slug, component, index }: any) {
     </motion.div>
   );
 }
+
+export default React.memo(ComponentCard);

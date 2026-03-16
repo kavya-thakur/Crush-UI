@@ -29,7 +29,7 @@ export default function BlockGallery() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-0 py-20">
+    <div className="max-w-7xl mx-auto px-6 md:px-0 pb-24">
       <header className="mb-16">
         <h2 className="text-5xl font-medium tracking-tight text-gradient sm:text-6xl">
           Crush UI{" "}

@@ -5,7 +5,6 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { UltraPolishedCard } from "../ui/cards/MarqueCard";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -1154,7 +1153,6 @@ export default function HiringAgencyy() {
         <WhoIsItFor />
         <FeaturesSection />
         <JoinWaitlist />
-        <UltraPolishedCard />
       </main>
       <Footer />
     </div>

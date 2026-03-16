@@ -22,7 +22,7 @@ const itemVariants: Variants = {
 
 export const UltraPolishedCard: React.FC = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen b dark:bg-neutral-950 p-6 transition-colors duration-500">
+    <div className="flex items-center justify-center min-h-screen b dark:bg-neutral-950 transition-colors duration-500">
       <motion.div
         variants={containerVariants}
         initial="initial"

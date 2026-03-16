@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
           {/* Logo & Divider Section */}
           <div className="flex items-center gap-6 pointer-events-none">
             <a href="#" className="transition-opacity hover:opacity-70">
-              <div className="h-6 text-black">
+              <div className="h-6 w-30 md:w-full text-black">
                 <svg
                   width="100%"
                   height="100%"

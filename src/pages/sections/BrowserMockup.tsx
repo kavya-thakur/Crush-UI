@@ -1,34 +1,36 @@
-import React, { useState } from "react";
+import { useState, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Import your provided registries
 import { blockRegistry } from "../../data/blockRegistry";
 import { componentRegistry } from "../../data/componentRegistry";
 
-const BrowserMockup: React.FC = () => {
-  // 1. Define the tabs based on your registry keys
-  const tabs = [
-    { name: "Hero Section", id: "heroAgent", type: "block" },
-    { name: "SaaS Hero Section", id: "heroAgency", type: "block" }, // from componentRegistry
-    { name: "Footer Section", id: "Tidescapefooter", type: "block" },
-    { name: "Fancy Footer", id: "LocalyzerFooter", type: "block" },
-  ];
+function BrowserMockup() {
+  // stable tabs
+  const tabs = useMemo(
+    () => [
+      { name: "Hero Section", id: "heroAgent", type: "block" },
+      { name: "SaaS Hero Section", id: "heroAgency", type: "block" },
+      { name: "Footer Section", id: "Tidescapefooter", type: "block" },
+      { name: "Fancy Footer", id: "LocalyzerFooter", type: "block" },
+    ],
+    [],
+  );
 
   const [activeTab, setActiveTab] = useState(tabs[1]);
 
-  // 2. Intelligence: Determine which registry to use
-  const getActiveItem = () => {
+  // registry lookup optimized
+  const activeData = useMemo(() => {
     const registry =
       activeTab.type === "block" ? blockRegistry : componentRegistry;
-    return registry[activeTab.id];
-  };
 
-  const activeData = getActiveItem();
+    return registry[activeTab.id];
+  }, [activeTab]);
+
   const ActiveComponent = activeData?.component;
 
   return (
     <div className="relative my-4 w-full max-w-7xl mx-auto overflow-hidden rounded-2xl shadow-2xl md:my-12 border border-zinc-200 dark:border-zinc-800">
-      {/* Browser Header - Keeping your specific style */}
+      {/* Browser Header */}
       <div className="flex items-center justify-start bg-gray-100 py-4 pl-4 dark:bg-neutral-800 ">
         <div className="mr-6 flex items-center gap-2">
           <div className="size-3 rounded-full bg-red-500" />
@@ -36,7 +38,7 @@ const BrowserMockup: React.FC = () => {
           <div className="size-3 rounded-full bg-green-500" />
         </div>
 
-        {/* Navigation Tabs - Swapping between Blocks & Components */}
+        {/* Tabs */}
         <div className="no-visible-scrollbar flex items-center gap-2 overflow-x-auto py-0.5 pr-2 pl-2 md:pl-4">
           {tabs.map((tab) => (
             <button
@@ -54,10 +56,9 @@ const BrowserMockup: React.FC = () => {
         </div>
       </div>
 
-      {/* Browser Content Viewport */}
+      {/* Browser Content */}
       <div className="w-full overflow-hidden bg-gray-100/50 px-4 py-4 dark:bg-neutral-900">
-        <div className="relative flex min-h-[46rem] lg:max-h-[52rem] flex-col  rounded-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
-          {/* Dynamic Component Viewport */}
+        <div className="relative flex min-h-[46rem] lg:max-h-[52rem] flex-col rounded-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab.id}
@@ -82,6 +83,6 @@ const BrowserMockup: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
-export default BrowserMockup;
+export default memo(BrowserMockup);

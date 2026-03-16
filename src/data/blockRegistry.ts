@@ -17,11 +17,17 @@ import { TidescapeFooter } from "../components/blocks/footers/TidescapeFooter";
 import { tidescapeFooterCode } from "../snippets/blocks/footer/TidescapefooterCode";
 import { jitterFooterCode } from "../snippets/blocks/footer/JitterFooterCode";
 import { localyzerFooterCode } from "../snippets/blocks/footer/LocalyzerFooterCode";
+import growmytherapyFooter from "../components/blocks/footers/growmytherapyFooter";
+import { growmytherapyfooterCode } from "../snippets/blocks/footer/growmytherapyfooterCode";
+
 // GRID
 import BentoGrid from "../components/blocks/Grids/BentoGrid";
 import { bentoGridCode } from "../snippets/blocks/grid/bentoGridCode";
+// TESTIMONIALS
 import MarqueeTestimonials from "../components/blocks/testimonials/MarqueeTestimonials";
 import { marqueTestimonialsCode } from "../snippets/blocks/testimonials/marqueTestimonialsCode";
+import { animatedCTACode } from "../snippets/blocks/CTA/animatedCTAcode";
+import AnimatedCTA from "../components/blocks/CTA/AnimatedCTA";
 
 /* TYPES */
 type BlockDoc = {
@@ -92,6 +98,15 @@ export const blockRegistry: Record<string, BlockDoc> = {
     code: bentoGridCode,
   },
   /* MARKETING / CTA CATEGORY */
+  ctaBanner2: {
+    title: "CTA Banner",
+    description: "",
+    category: "Marketing",
+    component: AnimatedCTA,
+    previewHeight: 480,
+    usage: `<SimpleCTA />`,
+    code: animatedCTACode,
+  },
   ctaBanner: {
     title: "CTA Creative Banner",
     description:
@@ -102,6 +117,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     usage: `<SimpleCTA />`,
     code: simpleCTACode,
   },
+
   //TESTIMONIALS
   marqueTestimonials: {
     title: "Marque Testimonials",
@@ -146,5 +162,15 @@ export const blockRegistry: Record<string, BlockDoc> = {
     dependencies: ["motion"],
     usage: `<HeroGSAP />`,
     code: localyzerFooterCode,
+  },
+  growmytherapyFooter: {
+    title: "Footer",
+    description: "",
+    category: "Footer Sections",
+    component: growmytherapyFooter,
+    previewHeight: 600,
+    dependencies: ["motion"],
+    usage: `<HeroGSAP />`,
+    code: growmytherapyfooterCode,
   },
 };

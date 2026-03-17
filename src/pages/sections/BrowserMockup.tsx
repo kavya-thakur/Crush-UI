@@ -9,7 +9,7 @@ function BrowserMockup() {
   const tabs = useMemo(
     () => [
       { name: "Testimonial Section", id: "marqueTestimonials", type: "block" },
-      { name: "SaaS Hero Section", id: "heroAgency", type: "block" },
+      { name: "SaaS Hero Section", id: "hiringAgency", type: "block" },
       { name: "Feature Section", id: "featureSpecialities", type: "block" },
       { name: "CTA Section", id: "ctaBanner2", type: "block" },
     ],

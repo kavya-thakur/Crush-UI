@@ -44,7 +44,7 @@ export default function ComponentPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className="text-4xl font-medium tracking-tight text-gradient md:text-5xl mb-4">
+              <h1 className="text-4xl font-medium tracking-tight leading-snug text-gradient md:text-5xl mb-4">
                 {componentData.title}
               </h1>
 

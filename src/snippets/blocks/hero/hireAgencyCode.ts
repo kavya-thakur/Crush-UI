@@ -1,23 +1,5 @@
 export const heroAgencyCode = `
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const slides = [
-  {
-    main: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa020eecfd681121acf_hero-slide-1-img-1.avif",
-    sub: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa08f873b1b8e9f2260_hero-slide-1-img-2.avif",
-  },
-  {
-    main: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa03ca3b733f5b55d74_hero-slide-2-img-1.avif",
-    sub: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa1a496e8044c51f8e7_hero-slide-2-img-2.avif",
-  },
-  {
-    main: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa0e74a211f5605758c_hero-slide-3-img-1.avif",
-    sub: "https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6908eaa0a826889d83292f9e_hero-slide-3-img-2.avif",
-  },
-];
-
-export const HeroSection: React.FC = () => {
+export const HiringAgency: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [email, setEmail] = useState("");
 
@@ -30,15 +12,8 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#fbfbfb] font-sans selection:bg-black selection:text-white">
-      {/* Background Gradient Decorative Image */}
-      <img
-        src="https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6901e53513dcf1ea037d2e38_bg-gradient.avif"
-        className="absolute right-0 top-0 z-0 h-[80%] w-auto opacity-60 mix-blend-multiply"
-        alt=""
-      />
-
-      <div className="container relative z-10 mx-auto px-6 py-20 lg:px-12 xl:max-w-7xl">
+    <section className="relative min-h-screen w-full overflow-hidden py-36  bg-[#fbfbfb] font-sans selection:bg-black selection:text-white">
+      <div className="container relative z-10 mx-auto px-6 lg:px-12 xl:max-w-7xl">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-8">
           {/* Left Column: Content */}
           <motion.div
@@ -173,7 +148,9 @@ export const HeroSection: React.FC = () => {
                   <button
                     key={idx}
                     onClick={() => setCurrentSlide(idx)}
-                   className={\`h-2 transition-all duration-300 rounded-full \${idx === currentSlide ? "w-8 bg-black" : "w-2 bg-black/20"}\`}
+                    className={\`h-2 transition-all duration-300 rounded-full \${
+                      idx === currentSlide ? "w-8 bg-black" : "w-2 bg-black/20"
+                    }\`}
                   />
                 ))}
               </div>
@@ -184,5 +161,4 @@ export const HeroSection: React.FC = () => {
     </section>
   );
 };
-
 `;

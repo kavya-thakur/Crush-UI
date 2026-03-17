@@ -64,10 +64,10 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: Hero,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<Hero />`,
     code: heroSaasCode,
   },
-  heroAgent: {
+  heroAgents: {
     title: "Hero Agents",
     description:
       "Cinematic hero section with clip-path image reveals and staggered text.",
@@ -75,10 +75,10 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: HeroAgents,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<HeroAgents />`,
     code: heroAgentCode,
   },
-  heroAgency: {
+  hiringAgency: {
     title: "Hiring Agency",
     description:
       "Hiring Agency hero section with clip-path image reveals and staggered text.",
@@ -86,7 +86,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: HiringAgency,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<HiringAgency />`,
     code: heroAgencyCode,
   },
   // FEATURE SECTIONS
@@ -111,7 +111,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     premium: true,
     dependencies: ["motion"],
-    usage: `<FeatureSpecialties />`,
+    usage: `<AutomationFlowWithSkeletons />`,
     code: AutomationFlowWithSkeletonsCode,
   },
   //grid
@@ -123,7 +123,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: BentoGrid,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<BentoGrid />`,
     code: bentoGridCode,
   },
   /* MARKETING / CTA CATEGORY */
@@ -133,7 +133,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     category: "Marketing",
     component: AnimatedCTA,
     previewHeight: 480,
-    usage: `<SimpleCTA />`,
+    usage: `<AnimatedCTA />`,
     code: animatedCTACode,
   },
   ctaBanner: {
@@ -167,7 +167,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: TidescapeFooter,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<TidescapeFooter />`,
     code: tidescapeFooterCode,
   },
   JitterFooter: {
@@ -178,7 +178,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: JitterFooter,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<JitterFooter />`,
     code: jitterFooterCode,
   },
   LocalyzerFooter: {
@@ -189,7 +189,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: LocalyzerFooter,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<LocalyzerFooter />`,
     code: localyzerFooterCode,
   },
   growmytherapyFooter: {
@@ -199,7 +199,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     component: growmytherapyFooter,
     previewHeight: 600,
     dependencies: ["motion"],
-    usage: `<HeroGSAP />`,
+    usage: `<growmytherapyFooter />`,
     code: growmytherapyfooterCode,
   },
 };

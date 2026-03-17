@@ -16,7 +16,7 @@ const slides = [
   },
 ];
 
-export const HeroSection: React.FC = () => {
+export const HireAgency: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [email, setEmail] = useState("");
 

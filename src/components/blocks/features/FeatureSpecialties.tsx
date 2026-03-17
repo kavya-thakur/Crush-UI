@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+
+type SkeletonProps = {
+  isHovered: boolean;
+};
 
 // --- Skeleton 1: Real-time Messaging ---
-const ChatSkeleton = () => {
+const ChatSkeleton = ({ isHovered }: SkeletonProps) => {
   const messages = [
     {
       side: "left",
@@ -24,8 +29,13 @@ const ChatSkeleton = () => {
         <motion.div
           key={i}
           initial={{ opacity: 0, x: msg.side === "left" ? -20 : 20 }}
+          animate={
+            isHovered
+              ? { opacity: 1, x: 0 }
+              : { opacity: 0.5, x: msg.side === "left" ? -5 : 5 }
+          }
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.2, duration: 0.5 }}
+          transition={{ delay: i * 0.1, duration: 0.5 }}
           className={`flex items-start gap-2 ${msg.side === "right" ? "flex-row-reverse" : ""}`}
         >
           <img
@@ -43,14 +53,13 @@ const ChatSkeleton = () => {
 };
 
 // --- Skeleton 2: Secure File Sharing ---
-export const FileSkeleton = () => {
+export const FileSkeleton = ({ isHovered }: SkeletonProps) => {
   return (
     <motion.div
       initial="initial"
-      whileHover="hover"
+      animate={isHovered ? "hover" : "initial"}
       className="relative flex h-full items-center justify-center overflow-hidden bg-neutral-50/50 dark:bg-neutral-900/20"
     >
-      {/* 1. Refined Background Rays (Subtler) */}
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 opacity-30">
         {[...Array(6)].map((_, i) => (
           <div
@@ -72,7 +81,6 @@ export const FileSkeleton = () => {
         ))}
       </div>
 
-      {/* 2. 3D Folder Container */}
       <div className="relative z-10" style={{ perspective: "1000px" }}>
         <motion.div
           variants={{
@@ -83,12 +91,10 @@ export const FileSkeleton = () => {
           className="relative h-20 w-28"
           style={{ transformStyle: "preserve-3d" }}
         >
-          {/* Back Leaf of Folder */}
           <div className="absolute inset-0 rounded-xl bg-amber-500 shadow-lg dark:bg-amber-600">
             <div className="absolute -top-3 left-0 h-6 w-10 rounded-t-lg bg-amber-500 dark:bg-amber-600" />
           </div>
 
-          {/* THE FILE: Pops out on hover */}
           <motion.div
             variants={{
               initial: { y: 0, x: "-50%", rotate: 0 },
@@ -111,15 +117,9 @@ export const FileSkeleton = () => {
                 className="h-full w-full object-cover"
                 alt="preview"
               />
-              {/* Decorative "Lines" on the file */}
-              <div className="absolute bottom-1 left-1 right-1 space-y-1">
-                <div className="h-1 w-full bg-blue-500/20 rounded-full" />
-                <div className="h-1 w-2/3 bg-blue-500/20 rounded-full" />
-              </div>
             </div>
           </motion.div>
 
-          {/* Front Leaf of Folder (Translucent/Glassmorphic) */}
           <motion.div
             variants={{
               initial: { rotateX: 0 },
@@ -127,14 +127,10 @@ export const FileSkeleton = () => {
             }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
             className="absolute inset-0 z-10 origin-bottom rounded-xl bg-amber-400/90 dark:bg-amber-500/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] backdrop-blur-[2px]"
-          >
-            {/* Folder detail line */}
-            <div className="absolute top-4 left-4 right-4 h-px bg-amber-600/20" />
-          </motion.div>
+          />
         </motion.div>
       </div>
 
-      {/* 3. Aesthetic Shine Effect */}
       <motion.div
         variants={{
           initial: { opacity: 0 },
@@ -147,12 +143,11 @@ export const FileSkeleton = () => {
 };
 
 // --- Skeleton 3: Team Collaboration ---
-const CollaborationSkeleton = () => {
+const CollaborationSkeleton = ({ isHovered }: SkeletonProps) => {
   return (
     <div className="relative flex h-full items-center justify-center">
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
+        animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
         className="w-40 rounded-xl bg-white dark:bg-neutral-900 p-4 shadow-2xl ring-1 ring-black/10 dark:ring-white/10"
       >
         <div className="mb-4 flex gap-1">
@@ -172,15 +167,15 @@ const CollaborationSkeleton = () => {
         ))}
       </motion.div>
 
-      {/* Floating Cursors */}
       <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -20, 0] }}
+        animate={isHovered ? { x: [0, 20, 0], y: [0, -10, 0] } : {}}
         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         className="absolute top-1/2 right-14 flex items-center gap-2 rounded-full bg-blue-500 px-2 py-1 shadow-lg"
       >
         <img
           src="https://assets.aceternity.com/avatars/1.webp"
           className="size-4 rounded-full"
+          alt="user"
         />
         <span className="text-[8px] font-bold text-white">Sarah</span>
       </motion.div>
@@ -190,46 +185,56 @@ const CollaborationSkeleton = () => {
 
 // --- Main Section ---
 export const FeaturesSectionWithSkeleton = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const features = [
     {
       title: "Real time messaging",
       description:
         "Send and receive messages in real time with voice and text.",
-      skeleton: <ChatSkeleton />,
+      skeleton: ChatSkeleton,
     },
     {
       title: "Secure file sharing",
       description: "Share files securely with end-to-end encryption.",
-      skeleton: <FileSkeleton />,
+      skeleton: FileSkeleton,
     },
     {
       title: "Team collaboration",
       description: "Collaborate with your team in shared workspaces.",
-      skeleton: <CollaborationSkeleton />,
+      skeleton: CollaborationSkeleton,
     },
   ];
 
   return (
     <section className="bg-white min-h-screen flex items-center justify-center dark:bg-neutral-950 px-4 py-20 md:px-8 lg:px-16">
       <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-2xl md:grid-cols-3">
-        {features.map((feature, idx) => (
-          <div
-            key={idx}
-            className="group flex h-full flex-col justify-between border-b border-neutral-200 dark:border-neutral-800 p-8 md:border-b-0 md:border-r last:border-0 bg-white dark:bg-neutral-950"
-          >
-            <div className="h-60 w-full rounded-2xl bg-neutral-50 dark:bg-neutral-900/50 mb-8 overflow-hidden group-hover:bg-neutral-100 dark:group-hover:bg-neutral-900 transition-colors duration-500">
-              {feature.skeleton}
+        {features.map((feature, idx) => {
+          const SkeletonComponent = feature.skeleton;
+          const isHovered = hoveredIndex === idx;
+
+          return (
+            <div
+              key={idx}
+              onMouseEnter={() => setHoveredIndex(idx)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="group flex h-full flex-col justify-between border-b border-neutral-200 dark:border-neutral-800 p-8 md:border-b-0 md:border-r last:border-0 bg-white dark:bg-neutral-950 cursor-default"
+            >
+              <div className="h-60 w-full rounded-2xl bg-neutral-50 dark:bg-neutral-900/50 mb-8 overflow-hidden group-hover:bg-neutral-100 dark:group-hover:bg-neutral-900 transition-colors duration-500">
+                <SkeletonComponent isHovered={isHovered} />
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-100 tracking-tight">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-100 tracking-tight">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

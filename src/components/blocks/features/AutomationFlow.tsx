@@ -6,7 +6,6 @@ const springConfig = { type: "spring", stiffness: 260, damping: 20 } as const;
 // --- Skeleton 1: The Neural Flow (Curved Beam) ---
 const FlowEngineSkeleton = () => {
   const id = useId();
-  // An advanced "S" Path that hits a central midpoint
   const pathD = "M10 40C60 40 60 10 110 10C160 10 160 40 210 40";
 
   return (
@@ -258,7 +257,7 @@ const SocialSkeleton = () => {
         whileHover="hover"
         className="relative flex items-center justify-center h-full w-full"
       >
-        {avatars.map((a, i) => (
+        {avatars.map((_, i) => (
           <motion.div
             key={i}
             custom={i} // Passes index to the variants

@@ -26,7 +26,6 @@ export default function BlockPage() {
           b.category?.toLowerCase().replace(/\s+/g, "-") === categorySlug,
       )
     : [];
-  const firstBlock = blocksInGallery.length > 0 ? blocksInGallery[0][1] : null;
   const handleFullPreview = (slug: string) => {
     setActivePreviewSlug(slug);
     setIsFullView(true);

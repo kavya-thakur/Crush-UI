@@ -61,17 +61,7 @@ export default function BlockPage() {
           </header>
 
           {/* Blocks */}
-          {/* <div className="space-y-24 md:space-y-40 mb-20">
-            {blocksInGallery.map(([slug, block]) => (
-              <GalleryBlockCard
-                key={slug}
-                slug={slug}
-                block={block}
-                onFullPreview={handleFullPreview}
-              />
-            ))}
-          </div> */}
-          {/* Blocks */}
+
           <div className="space-y-32 md:space-y-18">
             {blocksInGallery.map(([slug, block]) => (
               <div key={slug} className="">

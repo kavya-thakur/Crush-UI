@@ -36,7 +36,7 @@ const containerVariants = {
   },
 };
 
-export default function CTA() {
+export default function AnimatedCTA() {
   const titleWords = CTA_DATA.title.split(" ");
 
   return (
@@ -144,5 +144,6 @@ export default function CTA() {
     </section>
   );
 }
+
 
 `;

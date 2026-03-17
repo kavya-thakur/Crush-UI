@@ -6,6 +6,7 @@ import { blockRegistry } from "../data/blockRegistry";
 import Breadcrumbs from "../components/app/Breadcrumbs";
 import IframeWrapper from "../components/app/IframeWrapper";
 import GalleryBlockCard from "../components/docs/handlers/GalleryBlockCard";
+import DocsSection from "../components/docs/DocsSection";
 
 export default function BlockPage() {
   const { categorySlug } = useParams<{ categorySlug?: string }>();
@@ -25,7 +26,6 @@ export default function BlockPage() {
           b.category?.toLowerCase().replace(/\s+/g, "-") === categorySlug,
       )
     : [];
-
   const handleFullPreview = (slug: string) => {
     setActivePreviewSlug(slug);
     setIsFullView(true);
@@ -61,7 +61,7 @@ export default function BlockPage() {
           </header>
 
           {/* Blocks */}
-          <div className="space-y-24 md:space-y-40 mb-20">
+          {/* <div className="space-y-24 md:space-y-40 mb-20">
             {blocksInGallery.map(([slug, block]) => (
               <GalleryBlockCard
                 key={slug}
@@ -69,6 +69,28 @@ export default function BlockPage() {
                 block={block}
                 onFullPreview={handleFullPreview}
               />
+            ))}
+          </div> */}
+          {/* Blocks */}
+          <div className="space-y-32 md:space-y-18">
+            {blocksInGallery.map(([slug, block]) => (
+              <div key={slug} className="">
+                {/* 1. The Visual Card */}
+                <GalleryBlockCard
+                  slug={slug}
+                  block={block}
+                  onFullPreview={handleFullPreview}
+                />
+
+                {/* 2. The Specific Docs for THIS block */}
+                <div className="max-w-7xl">
+                  <DocsSection
+                    usage={block.usage}
+                    dependencies={block.dependencies}
+                  />
+                </div>
+                <hr className="border-zinc-100 dark:border-white/[0.05]" />
+              </div>
             ))}
           </div>
         </div>

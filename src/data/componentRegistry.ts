@@ -78,8 +78,9 @@ export const componentRegistry: Record<string, ComponentDoc> = {
   },
   colorFillingButton: {
     title: "Color Filling Button",
-    description: "color filling animations buttons",
+    description: "Tastefull color filling animation button using motion",
     category: "Button Components",
+    dependencies: ["motion"],
     component: ColorFillingButton,
     usage: `<ColorFillingButton />`,
     code: colorfillingbuttonCode,

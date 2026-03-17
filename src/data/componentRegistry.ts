@@ -22,6 +22,8 @@ import { gradientRevealTextCode } from "../snippets/component/text/gradientRevea
 // NAVBAR
 import NavbarSaas from "../components/ui/navbars/NavbarSaas";
 import { navbarSaasCode } from "../snippets/component/navigation/navbarSaasCode";
+import { ColorFillingButton } from "../components/ui/button/ColorFillingButton";
+import { colorfillingbuttonCode } from "../snippets/component/buttons/colorFillingButtonCode";
 
 type ComponentVariant = {
   name: string;
@@ -73,6 +75,14 @@ export const componentRegistry: Record<string, ComponentDoc> = {
         code: `<Button variant="ghost">Ghost Button</Button>`,
       },
     ],
+  },
+  colorFillingButton: {
+    title: "Color Filling Button",
+    description: "color filling animations buttons",
+    category: "Button Components",
+    component: ColorFillingButton,
+    usage: `<ColorFillingButton />`,
+    code: colorfillingbuttonCode,
   },
   // NAVIGATOINS
   navbarSaas: {

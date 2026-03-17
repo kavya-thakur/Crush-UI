@@ -56,17 +56,10 @@ export default function GalleryBlockCard({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              /* FIX: Removed h-[550px]. 
-           Using min-h-[400px] so small items look good, 
-           but allowing it to grow for big footers.
-        */
               className="relative z-10 w-full min-h-[400px] h-full flex flex-col items-center"
             >
               <div className="w-full h-full flex items-start justify-center overflow-visible">
                 {PreviewComponent && (
-                  /* FIX: 'w-full' ensures the footer stretches to the edges.
-               'origin-top' ensures if it scales, it doesn't leave gaps.
-            */
                   <div className="w-full origin-top transform-gpu">
                     <PreviewComponent />
                   </div>

@@ -30,3 +30,12 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 128, 128, 0.2);
 }
+@layer utilities {
+  .no-visible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-visible-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

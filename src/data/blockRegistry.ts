@@ -28,6 +28,10 @@ import MarqueeTestimonials from "../components/blocks/testimonials/MarqueeTestim
 import { marqueTestimonialsCode } from "../snippets/blocks/testimonials/marqueTestimonialsCode";
 import { animatedCTACode } from "../snippets/blocks/CTA/animatedCTAcode";
 import AnimatedCTA from "../components/blocks/CTA/AnimatedCTA";
+import { FeaturesSectionWithSkeleton } from "../components/blocks/features/FeatureSpecialties";
+import { featureSpecialitiesCode } from "../snippets/blocks/feature section/FeatureSpecialtiesCode";
+import { AutomationFlowWithSkeletons } from "../components/blocks/features/AutomationFlow";
+import { AutomationFlowWithSkeletonsCode } from "../snippets/blocks/feature section/AutomationFlowWithSkeletonsCode";
 
 /* TYPES */
 type BlockDoc = {
@@ -35,10 +39,11 @@ type BlockDoc = {
   description: string;
   category:
     | "Hero Sections"
+    | "Feature Sections"
     | "Marketing"
     | "Sections"
     | "Footer Sections"
-    | "Testimonials"
+    | "Testimonial Sections"
     | "Grids";
   component: ComponentType<any>;
   premium?: boolean;
@@ -84,7 +89,31 @@ export const blockRegistry: Record<string, BlockDoc> = {
     usage: `<HeroGSAP />`,
     code: heroAgencyCode,
   },
-
+  // FEATURE SECTIONS
+  featureSpecialities: {
+    title: "Feature Section",
+    description:
+      "Cinematic hero section with clip-path image reveals and staggered text.",
+    category: "Feature Sections",
+    component: FeaturesSectionWithSkeleton,
+    previewHeight: 600,
+    premium: true,
+    dependencies: ["motion"],
+    usage: `<FeatureSpecialties />`,
+    code: featureSpecialitiesCode,
+  },
+  automationFlow: {
+    title: "Feature Section",
+    description:
+      "Cinematic feature section with tastefull hover animations and beautiful skeletons.",
+    category: "Feature Sections",
+    component: AutomationFlowWithSkeletons,
+    previewHeight: 600,
+    premium: true,
+    dependencies: ["motion"],
+    usage: `<FeatureSpecialties />`,
+    code: AutomationFlowWithSkeletonsCode,
+  },
   //grid
   bentogrid: {
     title: "Bento grid",
@@ -122,7 +151,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
   marqueTestimonials: {
     title: "Marque Testimonials",
     description: "",
-    category: "Testimonials",
+    category: "Testimonial Sections",
     component: MarqueeTestimonials,
     previewHeight: 600,
     dependencies: ["motion"],

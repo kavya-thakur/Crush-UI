@@ -8,10 +8,10 @@ function BrowserMockup() {
   // stable tabs
   const tabs = useMemo(
     () => [
-      { name: "Hero Section", id: "heroAgent", type: "block" },
+      { name: "Testimonial Section", id: "marqueTestimonials", type: "block" },
       { name: "SaaS Hero Section", id: "heroAgency", type: "block" },
-      { name: "Footer Section", id: "Tidescapefooter", type: "block" },
-      { name: "Fancy Footer", id: "LocalyzerFooter", type: "block" },
+      { name: "Feature Section", id: "featureSpecialities", type: "block" },
+      { name: "CTA Section", id: "ctaBanner2", type: "block" },
     ],
     [],
   );
@@ -29,7 +29,7 @@ function BrowserMockup() {
   const ActiveComponent = activeData?.component;
 
   return (
-    <div className="relative my-4 w-full max-w-7xl mx-auto overflow-hidden rounded-2xl shadow-2xl md:my-12 border border-zinc-200 dark:border-zinc-800">
+    <div className="relative my-4 w-full max-w-7xl mx-auto overflow-hidden rounded-2xl shadow-2xl md:my-12 border border-zinc-200 dark:border-zinc-800 ">
       {/* Browser Header */}
       <div className="flex items-center justify-start bg-gray-100 py-4 pl-4 dark:bg-neutral-800 ">
         <div className="mr-6 flex items-center gap-2">
@@ -58,7 +58,7 @@ function BrowserMockup() {
 
       {/* Browser Content */}
       <div className="w-full overflow-hidden bg-gray-100/50 px-4 py-4 dark:bg-neutral-900">
-        <div className="relative flex min-h-[46rem] lg:max-h-[52rem] flex-col rounded-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
+        <div className="relative flex min-h-[36rem] lg:max-h-[52rem] flex-col rounded-xl bg-white shadow-sm ring-1 ring-black/10 dark:bg-neutral-950 overflow-hidden isolate transform-gpu">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab.id}

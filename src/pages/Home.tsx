@@ -7,7 +7,6 @@ import BlockGallery from "./sections/BlockGallery";
 import Footer from "./sections/Footer";
 import OrbitingStack from "./sections/OrbitingStack";
 // import NotusLandingPage from "../components/templates/NotusLandingPage";
-
 const Home = () => {
   return (
     <div>
@@ -19,8 +18,6 @@ const Home = () => {
       <BlockGallery />
       <OrbitingStack />
       <Footer />
-
-      {/* <NotusLandingPage /> */}
     </div>
   );
 };

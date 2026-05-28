@@ -6,6 +6,7 @@ type Category = {
   slug: string;
   previewBlock: any;
   count: number;
+  isPro: boolean;
 };
 
 type Props = {

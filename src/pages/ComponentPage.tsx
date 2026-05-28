@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Sidebar from "../components/layout/Sidebar";
@@ -9,12 +9,17 @@ import Breadcrumbs from "../components/app/Breadcrumbs";
 import DocsTabs from "../components/docs/DocsTabs";
 import ComponentPreview from "../components/docs/handlers/ComponentPreview";
 import DocsSection from "../components/docs/DocsSection";
+import API from "../lib/axios";
 
 type ComponentSlug = keyof typeof componentRegistry;
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: ComponentSlug }>();
+
   const [tab, setTab] = useState<"preview" | "code">("preview");
+  const [code, setCode] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!slug || !componentRegistry[slug]) {
     return (
@@ -26,6 +31,32 @@ export default function ComponentPage() {
 
   const componentData = componentRegistry[slug];
   const Component = componentData.component;
+
+  useEffect(() => {
+    const fetchCode = async () => {
+      if (tab !== "code") return;
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await API.get(`/components/${slug}/code`);
+        setCode(res.data.code);
+      } catch (err: any) {
+        if (err.response?.status === 401) {
+          setError("Login required to access this component");
+        } else if (err.response?.status === 403) {
+          setError("Upgrade to pro to access this component");
+        } else {
+          setError("Something went wrong");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCode();
+  }, [tab, slug]);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[1440px] bg-white transition-colors duration-300 dark:bg-[#030303]">
@@ -76,7 +107,6 @@ export default function ComponentPage() {
                         <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
                       </div>
 
-                      {/* FIX 1: Pass the category properly to variants */}
                       <ComponentPreview
                         component={Component}
                         variant={variant.name}
@@ -86,7 +116,6 @@ export default function ComponentPage() {
                   ))
                 ) : (
                   <section className="space-y-5">
-                    {/* FIX 2: Added a section wrapper and category pass for single components */}
                     <ComponentPreview
                       component={Component}
                       category={componentData.category}
@@ -109,14 +138,27 @@ export default function ComponentPage() {
                   <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
                 </div>
 
-                <div className="h-full overflow-y-auto custom-scrollbar">
-                  <CodeBlock code={componentData.code || ""} language="tsx" />
-                </div>
+                {/* 🔥 Loading */}
+                {loading && (
+                  <div className="h-[200px] flex items-center justify-center text-zinc-400">
+                    Loading...
+                  </div>
+                )}
+
+                {error && (
+                  <div className="h-[200px] flex items-center justify-center text-zinc-400">
+                    {error}
+                  </div>
+                )}
+
+                {/* 🔥 Success */}
+                {!loading && !error && (
+                  <CodeBlock code={code || ""} language="tsx" />
+                )}
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Docs Sections */}
           <DocsSection
             installation={componentData.installation}
             usage={componentData.usage}

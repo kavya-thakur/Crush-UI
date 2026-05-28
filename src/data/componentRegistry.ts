@@ -2,28 +2,21 @@ import type { ComponentType } from "react";
 
 /* BUTTONS */
 import Button from "../components/ui/button/Button";
-import { buttonCode } from "../snippets/component/buttons/buttonCode";
+
 /* CARDS */
 import { MarqueCard } from "../components/ui/cards/MarqueCard";
 import { AnalyticsCard } from "../components/ui/cards/AnalyticsCard";
 import { GlassSecureCard } from "../components/ui/cards/GlassSecureCard";
 import { PricingHighlightCard } from "../components/ui/cards/PricingHighlightCard";
-import { pricingCardCode } from "../snippets/component/cards/PricingCardCode";
-import { marqueCardCode } from "../snippets/component/cards/marqueCardCode";
-import { analyticsCardCode } from "../snippets/component/cards/analyticsCardCode";
-import { glassCardCode } from "../snippets/component/cards/glassCardCode";
+
 /* TEXT */
 import BlurRevealText from "../components/ui/text/BlurUpAnimation";
 import StaggerText from "../components/ui/text/WordStagger";
 import GradientRevealText from "../components/ui/text/GradientFade";
-import { blurRevealTextCode } from "../snippets/component/text/blurRevealTextCode";
-import { staggerTextCode } from "../snippets/component/text/staggerTextCode";
-import { gradientRevealTextCode } from "../snippets/component/text/gradientRevealTextCode";
+
 // NAVBAR
 import NavbarSaas from "../components/ui/navbars/NavbarSaas";
-import { navbarSaasCode } from "../snippets/component/navigation/navbarSaasCode";
 import { ColorFillingButton } from "../components/ui/button/ColorFillingButton";
-import { colorfillingbuttonCode } from "../snippets/component/buttons/colorFillingButtonCode";
 
 type ComponentVariant = {
   name: string;
@@ -57,7 +50,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     // premium: true,
     previewProps: { variant: "primary", children: "Click me" },
     usage: `<Button variant="primary">Click me</Button>`,
-    code: buttonCode,
     variants: [
       {
         name: "Primary",
@@ -83,7 +75,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     dependencies: ["motion"],
     component: ColorFillingButton,
     usage: `<ColorFillingButton />`,
-    code: colorfillingbuttonCode,
   },
   // NAVIGATOINS
   navbarSaas: {
@@ -94,7 +85,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     previewHeight: 120,
     dependencies: ["motion"],
     usage: `<NavbarSaas />`,
-    code: navbarSaasCode,
   },
   /* CARDS */
   marqueCard: {
@@ -109,7 +99,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       children: "This is a modern animated card component.",
     },
     usage: `<MarqueCard />`,
-    code: marqueCardCode,
   },
   analyticsCard: {
     title: "Stats Card",
@@ -123,7 +112,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       children: "This is a modern animated card component.",
     },
     usage: `<AnalyticsCard />`,
-    code: analyticsCardCode,
   },
   glassCard: {
     title: "Glass Card",
@@ -137,7 +125,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       children: "This is a modern animated card component.",
     },
     usage: `<Card title="Example">Content</Card>`,
-    code: glassCardCode,
   },
   PricingCard: {
     title: "Pricing Card",
@@ -151,7 +138,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       children: "This is a modern animated card component.",
     },
     usage: `<Card title="Example">Content</Card>`,
-    code: pricingCardCode,
   },
   /* TEXT ANIMATIONS */
   blurRevealText: {
@@ -163,7 +149,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     dependencies: ["motion"],
     previewHeight: 120,
     usage: `<BlurRevealText />`,
-    code: blurRevealTextCode,
   },
 
   staggerText: {
@@ -175,7 +160,6 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     dependencies: ["motion"],
     previewHeight: 120,
     usage: `<StaggerText />`,
-    code: staggerTextCode,
   },
 
   gradientRevealText: {
@@ -187,6 +171,5 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     previewHeight: 120,
     dependencies: ["motion"],
     usage: `<GradientRevealText />`,
-    code: gradientRevealTextCode,
   },
 };

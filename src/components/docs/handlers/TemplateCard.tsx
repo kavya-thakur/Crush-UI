@@ -14,21 +14,21 @@ export default function TemplateCard({
   index,
 }: TemplateCardProps) {
   const PreviewComponent = template.component;
-  const isPremium = template.premium;
+  const isPremium = template.isPro;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        delay: index * 0.04, // Snappier staggered entry
+        delay: index * 0.04,
         duration: 0.5,
-        ease: [0.19, 1, 0.22, 1], // Apple-style exponential ease-out
+        ease: [0.19, 1, 0.22, 1],
       }}
     >
       <Link to={`/templates/${slug}`} className="group relative flex flex-col">
         {/* Main Card Container */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-50 p-2 transition-all duration-300 group-hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/30 dark:group-hover:border-zinc-700">
+        <div className="relative aspect-16/10 w-full overflow-hidden rounded-4xl border border-zinc-200 bg-zinc-50 p-2 transition-all duration-300 group-hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/30 dark:group-hover:border-zinc-700">
           {/* Top-Right Floating Badge */}
           {isPremium && (
             <div className="absolute top-4 right-4 z-20">

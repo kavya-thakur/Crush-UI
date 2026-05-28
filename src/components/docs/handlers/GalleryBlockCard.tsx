@@ -4,21 +4,43 @@ import { Maximize2 } from "lucide-react";
 import CodeBlock from "../CodeBlock";
 import PremiumCodeGuard from "../../app/PremiumCodeGuard";
 import DocsTabs from "../DocsTabs";
+import API from "../../../lib/axios";
 
 type Props = {
-  block: any;
   slug: string;
+  block: any;
   onFullPreview: (slug: string) => void;
+  onViewCode?: () => void;
 };
 
 export default function GalleryBlockCard({
   block,
   slug,
   onFullPreview,
+  onViewCode,
 }: Props) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
 
   const PreviewComponent = block.component;
+  const isTemplate = block.type === "template";
+
+  //  Download handler
+  const handleDownload = async () => {
+    try {
+      await API.get(`/templates/download/${slug}`, {
+        withCredentials: true,
+      });
+      // backend redirect will trigger download
+    } catch (err: any) {
+      const message = err.response?.data?.message;
+
+      if (message === "Login required") {
+        alert("Please login first");
+      } else if (message === "Upgrade to pro") {
+        alert("Upgrade to pro to download this template");
+      }
+    }
+  };
 
   return (
     <section className="group space-y-6">
@@ -33,9 +55,25 @@ export default function GalleryBlockCard({
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Tabs */}
+          {/*  Tabs ONLY for non-templates */}
+          {!isTemplate && (
+            <DocsTabs
+              tab={tab}
+              setTab={(value) => {
+                if (value === "code") {
+                  onViewCode?.();
+                }
+                setTab(value);
+              }}
+              isPremium={block.isPro}
+              hasAccess={
+                block.fetchedCode === undefined
+                  ? undefined
+                  : !!block.fetchedCode
+              }
+            />
+          )}
 
-          <DocsTabs tab={tab} setTab={setTab} isPremium={block.premium} />
           {/* Fullscreen */}
           <button
             onClick={() => onFullPreview(slug)}
@@ -46,17 +84,17 @@ export default function GalleryBlockCard({
         </div>
       </div>
 
-      {/* Preview Stage */}
-
+      {/* Preview / Code / Download */}
       <div className="relative w-full rounded-[32px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#030303] overflow-hidden transition-all duration-500">
         <AnimatePresence mode="wait">
-          {tab === "preview" ? (
+          {/*  PREVIEW */}
+          {tab === "preview" || isTemplate ? (
             <motion.div
               key="preview"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="relative z-10 w-full min-h-[400px] h-full flex flex-col items-center"
+              className="relative z-10 w-full min-h-[400px] flex flex-col items-center"
             >
               <div className="w-full h-full flex items-start justify-center overflow-visible">
                 {PreviewComponent && (
@@ -65,22 +103,37 @@ export default function GalleryBlockCard({
                   </div>
                 )}
               </div>
+
+              {/*  Download button for templates */}
+              {isTemplate && (
+                <div className="py-8 flex justify-center">
+                  <button
+                    onClick={handleDownload}
+                    className="px-6 py-3 rounded-full bg-black text-white hover:opacity-90 transition"
+                  >
+                    {block.isPro
+                      ? "Download Template (Pro)"
+                      : "Download Template"}
+                  </button>
+                </div>
+              )}
             </motion.div>
           ) : (
+            /* CODE (only for components/blocks) */
             <motion.div
               key="code"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              /* FIX: Increased code height to match large templates */
               className="bg-[#0d0d0e] min-h-[400px] max-h-[600px] md:max-h-[800px] overflow-y-auto custom-scrollbar"
             >
-              {block.premium ? (
+              {!block.fetchedCode ? (
                 <PremiumCodeGuard />
               ) : (
-                <div className="">
-                  <CodeBlock code={block.code || ""} language="tsx" />
-                </div>
+                <CodeBlock
+                  code={block.fetchedCode.component || ""}
+                  language="tsx"
+                />
               )}
             </motion.div>
           )}

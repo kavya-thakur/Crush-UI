@@ -4,34 +4,21 @@ import type { ComponentType } from "react";
 import Hero from "../components/blocks/herosections/HeroSaas";
 import HeroAgents from "../components/blocks/herosections/HeroAgent";
 import { HiringAgency } from "../components/templates/NewLanding";
-import { heroSaasCode } from "../snippets/blocks/hero/heroSaasCode";
-import { heroAgentCode } from "../snippets/blocks/hero/heroAgentCode";
-import { heroAgencyCode } from "../snippets/blocks/hero/hireAgencyCode";
 /* CTA */
 import SimpleCTA from "../components/blocks/CTA/SimpleCTA";
-import { simpleCTACode } from "../snippets/blocks/CTA/simpleCTACode";
 // FOOTER
 import JitterFooter from "../components/blocks/footers/JitterFooter";
 import LocalyzerFooter from "../components/blocks/footers/LocalyzerFooter";
 import { TidescapeFooter } from "../components/blocks/footers/TidescapeFooter";
-import { tidescapeFooterCode } from "../snippets/blocks/footer/TidescapefooterCode";
-import { jitterFooterCode } from "../snippets/blocks/footer/JitterFooterCode";
-import { localyzerFooterCode } from "../snippets/blocks/footer/LocalyzerFooterCode";
 import growmytherapyFooter from "../components/blocks/footers/growmytherapyFooter";
-import { growmytherapyfooterCode } from "../snippets/blocks/footer/growmytherapyfooterCode";
 
 // GRID
 import BentoGrid from "../components/blocks/Grids/BentoGrid";
-import { bentoGridCode } from "../snippets/blocks/grid/bentoGridCode";
 // TESTIMONIALS
 import MarqueeTestimonials from "../components/blocks/testimonials/MarqueeTestimonials";
-import { marqueTestimonialsCode } from "../snippets/blocks/testimonials/marqueTestimonialsCode";
-import { animatedCTACode } from "../snippets/blocks/CTA/animatedCTAcode";
 import AnimatedCTA from "../components/blocks/CTA/AnimatedCTA";
 import { FeaturesSectionWithSkeleton } from "../components/blocks/features/FeatureSpecialties";
-import { featureSpecialitiesCode } from "../snippets/blocks/feature section/FeatureSpecialtiesCode";
 import { AutomationFlowWithSkeletons } from "../components/blocks/features/AutomationFlow";
-import { AutomationFlowWithSkeletonsCode } from "../snippets/blocks/feature section/AutomationFlowWithSkeletonsCode";
 
 /* TYPES */
 type BlockDoc = {
@@ -46,7 +33,7 @@ type BlockDoc = {
     | "Testimonial Sections"
     | "Grids";
   component: ComponentType<any>;
-  premium?: boolean;
+  isPro?: boolean;
   usage?: string;
   code?: string;
   previewHeight?: number;
@@ -62,10 +49,10 @@ export const blockRegistry: Record<string, BlockDoc> = {
       "Cinematic hero section with clip-path image reveals and staggered text.",
     category: "Hero Sections",
     component: Hero,
+    isPro: true,
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<Hero />`,
-    code: heroSaasCode,
   },
   heroAgents: {
     title: "Hero Agents",
@@ -73,10 +60,10 @@ export const blockRegistry: Record<string, BlockDoc> = {
       "Cinematic hero section with clip-path image reveals and staggered text.",
     category: "Hero Sections",
     component: HeroAgents,
+    isPro: true,
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<HeroAgents />`,
-    code: heroAgentCode,
   },
   hiringAgency: {
     title: "Hiring Agency",
@@ -84,10 +71,10 @@ export const blockRegistry: Record<string, BlockDoc> = {
       "Hiring Agency hero section with clip-path image reveals and staggered text.",
     category: "Hero Sections",
     component: HiringAgency,
+    isPro: true,
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<HiringAgency />`,
-    code: heroAgencyCode,
   },
   // FEATURE SECTIONS
   featureSpecialities: {
@@ -97,10 +84,8 @@ export const blockRegistry: Record<string, BlockDoc> = {
     category: "Feature Sections",
     component: FeaturesSectionWithSkeleton,
     previewHeight: 600,
-    premium: true,
     dependencies: ["motion"],
     usage: `<FeatureSpecialties />`,
-    code: featureSpecialitiesCode,
   },
   automationFlow: {
     title: "Feature Section",
@@ -109,10 +94,9 @@ export const blockRegistry: Record<string, BlockDoc> = {
     category: "Feature Sections",
     component: AutomationFlowWithSkeletons,
     previewHeight: 600,
-    premium: true,
+    isPro: true,
     dependencies: ["motion"],
     usage: `<AutomationFlowWithSkeletons />`,
-    code: AutomationFlowWithSkeletonsCode,
   },
   //grid
   bentogrid: {
@@ -124,7 +108,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<BentoGrid />`,
-    code: bentoGridCode,
   },
   /* MARKETING / CTA CATEGORY */
   ctaBanner2: {
@@ -135,7 +118,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     dependencies: ["motion"],
     previewHeight: 480,
     usage: `<AnimatedCTA />`,
-    code: animatedCTACode,
   },
   ctaBanner: {
     title: "CTA Creative Banner",
@@ -146,7 +128,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     dependencies: ["motion"],
     previewHeight: 480,
     usage: `<SimpleCTA />`,
-    code: simpleCTACode,
   },
 
   //TESTIMONIALS
@@ -158,7 +139,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<MarqueeTestimonials />`,
-    code: marqueTestimonialsCode,
   },
   // FOOTER
   Tidescapefooter: {
@@ -170,7 +150,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<TidescapeFooter />`,
-    code: tidescapeFooterCode,
   },
   JitterFooter: {
     title: "Modern Footer",
@@ -181,7 +160,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<JitterFooter />`,
-    code: jitterFooterCode,
   },
   LocalyzerFooter: {
     title: "Animated Footer",
@@ -192,7 +170,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<LocalyzerFooter />`,
-    code: localyzerFooterCode,
   },
   growmytherapyFooter: {
     title: "Footer",
@@ -202,6 +179,5 @@ export const blockRegistry: Record<string, BlockDoc> = {
     previewHeight: 600,
     dependencies: ["motion"],
     usage: `<growmytherapyFooter />`,
-    code: growmytherapyfooterCode,
   },
 };

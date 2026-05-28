@@ -8,7 +8,7 @@ import RegistryFooter from "./sections/Footer";
 
 export default function Templates() {
   const templates = useTemplates();
-
+  const isLoading = !templates || templates.length === 0;
   const mergedTemplates = useMemo(() => {
     return templates.map((t) => {
       const local = templateRegistry[t.slug as keyof typeof templateRegistry];
@@ -43,7 +43,7 @@ export default function Templates() {
             </p>
           </header>
 
-          <TemplatesGrid templates={mergedTemplates} />
+          <TemplatesGrid templates={mergedTemplates} isLoading={isLoading} />
         </main>
       </div>
       <RegistryFooter />

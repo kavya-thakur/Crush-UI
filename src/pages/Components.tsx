@@ -17,7 +17,7 @@ type BackendComponent = {
 type MergedComponent = BackendComponent & {
   component: React.ComponentType<any>;
   previewProps?: Record<string, any>;
-  description?: string;
+  description: string;
 };
 
 export default function Components() {
@@ -31,7 +31,8 @@ export default function Components() {
 
       const merged = res.data.components
         .map((item) => {
-          const local = componentRegistry[item.slug];
+          const local =
+            componentRegistry[item.slug as keyof typeof componentRegistry];
 
           if (!local) return null;
 

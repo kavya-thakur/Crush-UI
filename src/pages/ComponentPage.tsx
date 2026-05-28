@@ -153,7 +153,7 @@ export default function ComponentPage() {
 
                 {/* 🔥 Success */}
                 {!loading && !error && (
-                  <CodeBlock code={code?.component || ""} language="tsx" />
+                  <CodeBlock code={code || ""} language="tsx" />
                 )}
               </motion.div>
             )}

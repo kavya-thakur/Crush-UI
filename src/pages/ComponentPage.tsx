@@ -12,12 +12,19 @@ import DocsSection from "../components/docs/DocsSection";
 import API from "../lib/axios";
 
 type ComponentSlug = keyof typeof componentRegistry;
+type CodeData = {
+  component: string;
+  usage?: string;
+  installation?: string;
+  dependencies?: string[];
+};
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: ComponentSlug }>();
 
   const [tab, setTab] = useState<"preview" | "code">("preview");
-  const [code, setCode] = useState<string>("");
+
+  const [code, setCode] = useState<CodeData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -151,10 +158,7 @@ export default function ComponentPage() {
                   </div>
                 )}
 
-                {/* 🔥 Success */}
-                {!loading && !error && (
-                  <CodeBlock code={code || ""} language="tsx" />
-                )}
+                <CodeBlock code={code?.component || ""} language="tsx" />
               </motion.div>
             )}
           </AnimatePresence>

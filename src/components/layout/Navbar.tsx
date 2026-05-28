@@ -8,6 +8,7 @@ import {
   Search,
   Command,
   CircleUserRound,
+  DockIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -29,6 +30,7 @@ export default function Navbar() {
     { name: "Blocks", path: "/blocks", icon: Layers },
     { name: "Templates", path: "/templates", icon: Layout },
     { name: "Pricing", path: "/pricing", icon: CreditCard },
+    { name: "Docs", path: "/docs", icon: DockIcon },
   ];
 
   return (

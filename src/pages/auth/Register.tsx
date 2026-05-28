@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react";
 import API from "../../lib/axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function CreateAccount() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const { setUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +37,8 @@ export default function CreateAccount() {
         email,
         password,
       });
-      navigate("/");
+      setUser(res.data.user);
+      navigate("/account");
       console.log("Account Creation Successful:", res.data);
     } catch (error: any) {
       console.error(error);

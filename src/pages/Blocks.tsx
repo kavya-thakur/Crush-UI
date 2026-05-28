@@ -14,10 +14,15 @@ type BlockItem = {
   category: string;
   isPro: boolean;
 };
+
 export default function Blocks() {
   const blocks = useBlocks();
 
+  const isLoading = !blocks || blocks.length === 0;
+
   const categories = useMemo(() => {
+    if (!blocks || blocks.length === 0) return [];
+
     const map: Record<string, BlockItem[]> = {};
     console.log(blocks);
     blocks.forEach((block) => {
@@ -74,7 +79,7 @@ export default function Blocks() {
               </motion.div>
             </header>
 
-            <BlocksGrid categories={categories} />
+            <BlocksGrid categories={categories} isLoading={isLoading} />
           </div>
         </main>
       </div>

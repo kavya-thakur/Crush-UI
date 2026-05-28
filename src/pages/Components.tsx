@@ -22,7 +22,7 @@ type MergedComponent = BackendComponent & {
 
 export default function Components() {
   const [components, setComponents] = useState<MergedComponent[]>([]);
-
+  const isLoading = !components || components.length === 0;
   useEffect(() => {
     const fetchComponents = async () => {
       const res = await API.get<{ components: BackendComponent[] }>(
@@ -59,7 +59,7 @@ export default function Components() {
         <main className="flex-1 w-full">
           <div className="px-6 py-12 md:py-16 lg:px-12">
             <ComponentsHeader />
-            <ComponentsGrid components={components} />
+            <ComponentsGrid components={components} isLoading={isLoading} />
           </div>
         </main>
       </div>

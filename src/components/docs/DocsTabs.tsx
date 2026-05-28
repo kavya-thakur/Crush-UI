@@ -13,7 +13,6 @@ export default function DocsTabs({ tab, setTab, isPremium, hasAccess }: Props) {
     <div className="flex my-6 w-fit bg-zinc-100 dark:bg-zinc-800/50 p-1 rounded-md border border-zinc-200 dark:border-zinc-700">
       {["preview", "code"].map((t) => {
         const isActive = tab === t;
-        // const isLocked = t === "code" && isPremium && hasAccess === false;
         const isLocked = t === "code" && isPremium && !hasAccess;
 
         return (

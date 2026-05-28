@@ -7,16 +7,20 @@ import {
   CreditCard,
   Search,
   Command,
+  CircleUserRound,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import ThemeToggle from "../app/ThemeToggle";
+import PremiumButton from "../app/PremiumButton";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const { pathname } = useLocation();
+  const { user, loading } = useAuth();
 
   useEffect(() => setIsOpen(false), [pathname]);
 
@@ -99,6 +103,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-5">
+          {/* RIGHT SIDE OF THE NAVBAR FOR DESKTOP */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <button
@@ -139,6 +144,28 @@ export default function Navbar() {
               <Command size={10} />K
             </div>
           </button>
+          <div className="hidden md:block">
+            {loading ? null : user ? (
+              <div className="flex items-center gap-4">
+                <Link
+                  to="/account"
+                  className="group relative flex items-center justify-center h-10 w-10 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-200 shadow-sm"
+                >
+                  <CircleUserRound
+                    size={18}
+                    strokeWidth={1.5}
+                    className="text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors"
+                  />
+                </Link>
+              </div>
+            ) : (
+              <PremiumButton
+                text="Login"
+                path="/login"
+                className="w-22 text-xs uppercase"
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -173,6 +200,28 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
+              <div className="hidden md:block">
+                {loading ? null : user ? (
+                  <div className="flex items-center gap-4">
+                    <Link
+                      to="/account"
+                      className="group relative flex items-center justify-center h-10 w-10 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800/80 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-200 shadow-sm"
+                    >
+                      <CircleUserRound
+                        size={18}
+                        strokeWidth={1.5}
+                        className="text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors"
+                      />
+                    </Link>
+                  </div>
+                ) : (
+                  <PremiumButton
+                    text="Login"
+                    path="/login"
+                    className="w-22 text-xs uppercase"
+                  />
+                )}
+              </div>
             </div>
           </motion.div>
         )}

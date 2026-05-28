@@ -5,6 +5,9 @@ import Navbar from "./components/layout/Navbar";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import GlobalSearch from "./components/app/GlobalSearch";
 import Loader from "./components/app/Loader";
+import Login from "./pages/auth/Login";
+import CreateAccount from "./pages/auth/Register";
+import AccountPage from "./pages/account/AccountPage";
 
 /* Lazy loaded pages */
 const Home = lazy(() => import("./pages/Home"));
@@ -27,21 +30,24 @@ function App() {
         <div className="pt-16">
           <Suspense fallback={<Loader />}>
             <Routes>
+              {/* AUTH */}
+              <Route path="/register" element={<CreateAccount />} />
+              <Route path="/login" element={<Login />} />
+              {/* MAIN SECTIONS */}
               <Route path="/" element={<Home />} />
-
               <Route path="/components" element={<Components />} />
               <Route path="/components/:slug" element={<ComponentPage />} />
-
               <Route path="/blocks" element={<Blocks />} />
               <Route
                 path="/blocks/category/:categorySlug"
                 element={<BlockPage />}
               />
-
               <Route path="/templates" element={<Templates />} />
               <Route path="/templates/:slug" element={<TemplatePage />} />
-
+              {/* PRICING */}
               <Route path="/pricing" element={<Pricing />} />
+              {/* ACCOUNT */}
+              <Route path="/account" element={<AccountPage />} />
             </Routes>
           </Suspense>
         </div>

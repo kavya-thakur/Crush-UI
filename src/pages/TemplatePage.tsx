@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Sidebar from "../components/layout/Sidebar";
@@ -7,10 +7,20 @@ import { templateRegistry } from "../data/templateRegistry";
 import Breadcrumbs from "../components/app/Breadcrumbs";
 import IframeWrapper from "../components/app/IframeWrapper";
 import GalleryBlockCard from "../components/docs/handlers/GalleryBlockCard";
+import { useTemplates } from "../hooks/useTemplates";
 
 export default function TemplatePage() {
   const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
+
+  const templates = useTemplates();
+
+  const mergedTemplates = useMemo(() => {
+    return templates.map((t) => ({
+      ...t,
+      ...(templateRegistry[t.slug] || {}),
+    }));
+  }, [templates]);
 
   const [isFullView, setIsFullView] = useState(false);
   const [activePreviewSlug, setActivePreviewSlug] = useState<string | null>(
@@ -18,14 +28,12 @@ export default function TemplatePage() {
   );
   const [view, setView] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
-  const templatesInGallery = Object.entries(templateRegistry).filter(
-    ([templateSlug]) => {
-      if (!slug) return true;
-      return templateSlug === slug;
-    },
-  );
+  const templatesInGallery = mergedTemplates.filter((t) => {
+    if (!slug) return true;
+    return t.slug === slug;
+  });
 
-  const firstTemplate = templatesInGallery[0]?.[1];
+  const firstTemplate = templatesInGallery[0];
 
   const headerTitle = firstTemplate?.title || "Templates";
   const headerDescription =
@@ -37,9 +45,9 @@ export default function TemplatePage() {
     setIsFullView(true);
   };
 
-  const activeModalTemplate = activePreviewSlug
-    ? templateRegistry[activePreviewSlug]
-    : null;
+  const activeModalTemplate = mergedTemplates.find(
+    (t) => t.slug === activePreviewSlug,
+  );
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[1440px] bg-white dark:bg-[#030303] transition-colors duration-300">
@@ -69,10 +77,10 @@ export default function TemplatePage() {
 
           <div className="space-y-24 md:space-y-40 mb-20">
             {templatesInGallery.length > 0 ? (
-              templatesInGallery.map(([slug, template]) => (
+              templatesInGallery.map((template) => (
                 <GalleryBlockCard
-                  key={slug}
-                  slug={slug}
+                  key={template.slug}
+                  slug={template.slug}
                   block={template}
                   onFullPreview={handleFullPreview}
                 />
@@ -107,7 +115,9 @@ export default function TemplatePage() {
               onClose={() => setIsFullView(false)}
               isFullPage
             >
-              <activeModalTemplate.component />
+              {activeModalTemplate.component && (
+                <activeModalTemplate.component />
+              )}
             </IframeWrapper>
           </motion.div>
         )}

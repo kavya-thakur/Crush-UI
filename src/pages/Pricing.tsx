@@ -1,6 +1,8 @@
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import RegistryFooter from "./sections/Footer";
+import { useSubscription } from "../hooks/useSubscription";
 
 type Plan = {
   name: string;
@@ -15,7 +17,7 @@ type Plan = {
 const plans: Plan[] = [
   {
     name: "Free",
-    price: "$0",
+    price: "0",
     description: "Access to all free components",
     button: "Browse free components",
     features: [
@@ -29,9 +31,10 @@ const plans: Plan[] = [
   },
   {
     name: "Annual",
-    price: "$19",
+    price: "499",
     description: "Full access billed yearly",
     button: "Get Annual Access",
+    popular: true,
     features: [
       "Access to 60+ premium component blocks",
       "Access to 12+ templates",
@@ -42,24 +45,17 @@ const plans: Plan[] = [
     ],
     link: "",
   },
-  {
-    name: "Lifetime",
-    price: "$99",
-    description: "One-time purchase",
-    button: "Get Lifetime Access",
-    popular: true,
-    features: [
-      "Everything in annual",
-      "Lifetime updates",
-      "All future releases",
-      "Private community access",
-      "Priority support",
-    ],
-    link: "",
-  },
 ];
 
-function PricingCard({ plan }: { plan: Plan }) {
+function PricingCard({
+  plan,
+  onUpgrade,
+  loading,
+}: {
+  plan: Plan;
+  onUpgrade: () => void;
+  loading: boolean;
+}) {
   return (
     <motion.div
       whileHover={{ y: -6 }}
@@ -89,26 +85,41 @@ function PricingCard({ plan }: { plan: Plan }) {
           <span
             className={`text-sm opacity-70  ${plan.popular ? "text-neutral-200 dark:text-neutral-700" : "text-gradient"}`}
           >
-            $
+            ₹
           </span>
           <span
             className={`text-4xl font-bold  ${plan.popular ? "text-neutral-200 dark:text-neutral-700" : "text-gradient"}`}
           >
-            {plan.price.replace("$", "")}
+            {plan.price}
           </span>
         </div>
       </div>
-      <Link
-        to={`${plan.link}`}
-        className={`mb-8 flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all active:scale-[0.98] will-change-transform
+      {plan.name === "Free" ? (
+        <Link
+          to="/components"
+          className={`mb-8 flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all active:scale-[0.98] will-change-transform
     ${
       plan.popular
         ? "bg-white text-black hover:bg-neutral-200 dark:bg-zinc-900 dark:text-white"
         : "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
     }`}
-      >
-        {plan.button}
-      </Link>
+        >
+          {plan.button}
+        </Link>
+      ) : (
+        <button
+          onClick={onUpgrade}
+          disabled={loading}
+          className={`mb-8 flex w-full items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all active:scale-[0.98] will-change-transform disabled:cursor-not-allowed disabled:opacity-60
+    ${
+      plan.popular
+        ? "bg-white text-black hover:bg-neutral-200 dark:bg-zinc-900 dark:text-white"
+        : "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
+    }`}
+        >
+          {loading ? "Processing..." : plan.button}
+        </button>
+      )}
 
       <div className="space-y-3">
         {plan.features.map((feature) => (
@@ -126,34 +137,35 @@ function PricingCard({ plan }: { plan: Plan }) {
 }
 
 export default function Pricing() {
+  const { upgradeToPro, loading, message } = useSubscription();
   return (
-    <section className="relative mx-auto max-w-7xl px-6 py-10">
-      {/* Heading */}
-      <div className="mx-auto mb-16 max-w-3xl text-center">
-        <h1 className=" text-4xl md:text-5xl font-semibold text-gradient">
-          Get instant access to all components and templates
-        </h1>
+    <>
+      <section className="relative mx-auto max-w-7xl px-6 py-10">
+        {/* Heading */}
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <h1 className=" text-4xl md:text-5xl font-semibold text-gradient">
+            Get instant access to all components and templates
+          </h1>
 
-        <p className="mt-4 max-w-lg mx-auto text-neutral-500 dark:text-neutral-400">
-          One purchase gives you access to all premium UI components, blocks and
-          templates — including future updates.
-        </p>
-      </div>
+          <p className="mt-4 max-w-lg mx-auto text-neutral-500 dark:text-neutral-400">
+            One purchase gives you access to all premium UI components, blocks
+            and templates including future updates.
+          </p>
+        </div>
 
-      {/* Pricing Grid */}
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {plans.map((plan) => (
-          <PricingCard key={plan.name} plan={plan} />
-        ))}
-      </div>
-
-      {/* Bottom CTA */}
-      <div className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400">
-        Questions?{" "}
-        <span className="cursor-pointer underline hover:text-neutral-900 dark:hover:text-white">
-          Chat with us
-        </span>
-      </div>
-    </section>
+        {/* Pricing Grid */}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2 lg:px-20">
+          {plans.map((plan) => (
+            <PricingCard
+              key={plan.name}
+              plan={plan}
+              onUpgrade={upgradeToPro}
+              loading={loading}
+            />
+          ))}
+        </div>
+      </section>
+      <RegistryFooter />
+    </>
   );
 }

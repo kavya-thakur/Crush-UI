@@ -6,7 +6,7 @@ export type TemplateDoc = {
   title: string;
   description: string;
   component: ComponentType<any>;
-  premium?: boolean;
+  isPro?: boolean;
   category?: string;
   code?: string;
 };
@@ -17,29 +17,13 @@ export const templateRegistry: Record<string, TemplateDoc> = {
     description:
       "Complete SaaS landing page with hero, features, pricing and CTA.",
     component: NotusLandingPage,
-    premium: true,
     category: "SaaS",
-
-    code: `import NotusLandingPage from "@/components/templates/NotusLandingPage"
-
-export default function Page() {
-  return <NotusLandingPage />
-}
-`,
   },
   hiringAgency: {
     title: "Hiring Agency",
     description:
       "Complete SaaS landing page with hero, features, pricing and CTA.",
     component: HiringAgencyy,
-    premium: true,
     category: "SaaS",
-
-    code: `import NotusLandingPage from "@/components/templates/NotusLandingPage"
-
-export default function Page() {
-  return <NotusLandingPage />
-}
-`,
   },
 };

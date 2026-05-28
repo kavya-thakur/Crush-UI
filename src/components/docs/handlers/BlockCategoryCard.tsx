@@ -53,6 +53,13 @@ function BlockCategoryCard({ cat, index }: Props) {
         className="group relative flex flex-col focus:outline-none"
       >
         {/* --- THE STAGE --- */}
+        {cat.previewBlock.isPro && (
+          <div className="absolute top-4 right-8 z-20">
+            <span className="flex items-center rounded-full border border-zinc-950/10 bg-white/90 px-3 py-1 text-[10px] font-bold tracking-tight text-zinc-950 backdrop-blur-md shadow-sm dark:border-white/20 dark:bg-zinc-900/90 dark:text-white">
+              Premium
+            </span>
+          </div>
+        )}
         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[32px] border border-zinc-200 bg-zinc-50 p-2 transition-all duration-500 group-hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/30 dark:group-hover:border-zinc-400">
           {/* Blueprint accents */}
           <span className="absolute left-4 top-4 z-50 text-zinc-300 dark:text-zinc-700 text-xl font-light pointer-events-none group-hover:text-zinc-500 transition-colors">

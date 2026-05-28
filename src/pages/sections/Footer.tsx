@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function RegistryFooter() {
   const links = [
+    { label: "Home", path: "" },
     { label: "All Components", path: "components" },
     { label: "UI Blocks", path: "blocks" },
     { label: "Templates", path: "templates" },

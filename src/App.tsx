@@ -8,6 +8,9 @@ import Loader from "./components/app/Loader";
 import Login from "./pages/auth/Login";
 import CreateAccount from "./pages/auth/Register";
 import AccountPage from "./pages/account/AccountPage";
+import DocsPage from "./pages/sections/DocsPage";
+import PrivacyPolicyPage from "./pages/termsandpolicy/Policy";
+import TermsPage from "./pages/termsandpolicy/Terms";
 
 /* Lazy loaded pages */
 const Home = lazy(() => import("./pages/Home"));
@@ -48,6 +51,10 @@ function App() {
               <Route path="/pricing" element={<Pricing />} />
               {/* ACCOUNT */}
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/docs" element={<DocsPage />} />
+              {/* privacy and policy  */}
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms-condition" element={<TermsPage />} />
             </Routes>
           </Suspense>
         </div>

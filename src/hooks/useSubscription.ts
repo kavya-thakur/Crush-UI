@@ -125,12 +125,10 @@ export function useSubscription() {
       if (!order?.payment_session_id) {
         throw new Error("Unable to initialize payment session");
       }
-
       /* INITIALIZE CASHFREE */
       const cashfree = window.Cashfree({
-        mode: import.meta.env.MODE === "production" ? "production" : "sandbox",
+        mode: "sandbox",
       });
-
       /* OPEN CHECKOUT */
       const result = await cashfree.checkout({
         paymentSessionId: order.payment_session_id,

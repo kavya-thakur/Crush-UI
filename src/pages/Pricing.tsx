@@ -137,7 +137,7 @@ function PricingCard({
 }
 
 export default function Pricing() {
-  const { upgradeToPro, loading, message } = useSubscription();
+  const { upgradeToPro, loading } = useSubscription();
   return (
     <>
       <section className="relative mx-auto max-w-7xl px-6 py-10">

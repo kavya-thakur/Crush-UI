@@ -9,6 +9,7 @@ import GalleryBlockCard from "../components/docs/handlers/GalleryBlockCard";
 import DocsSection from "../components/docs/DocsSection";
 import API from "../lib/axios";
 import { useBlocks } from "../hooks/useBlocks";
+import { BlocksGridSkeleton } from "../components/app/skeletons/BlocksGridSkeleton";
 
 type CodeData = {
   component?: string;
@@ -19,7 +20,7 @@ type CodeData = {
 
 export default function BlockPage() {
   const { categorySlug } = useParams<{ categorySlug?: string }>();
-  const blocks = useBlocks();
+  const { blocks, loading } = useBlocks();
   const [codeMap, setCodeMap] = useState<Record<string, CodeData>>({});
   const [isFullView, setIsFullView] = useState(false);
   const [activePreviewSlug, setActivePreviewSlug] = useState<string | null>(
@@ -32,7 +33,7 @@ export default function BlockPage() {
 
   // Fetch code (ONLY when needed)
   const fetchCode = async (slug: string) => {
-    if (codeMap[slug]) return; // already fetched
+    if (codeMap[slug]) return;
 
     try {
       const res = await API.get(`/components/${slug}/code`);
@@ -53,7 +54,6 @@ export default function BlockPage() {
       )
     : [];
 
-  //  Merge registry (ONLY for component rendering)
   const mergedBlocks = filteredBlocks.map((block) => {
     const local = blockRegistry[block.slug as keyof typeof blockRegistry];
 
@@ -99,34 +99,38 @@ export default function BlockPage() {
 
             {/* Blocks */}
             <div className="space-y-32 md:space-y-18">
-              {mergedBlocks.map((block) => {
-                const code = codeMap[block.slug];
+              {loading ? (
+                <BlocksGridSkeleton />
+              ) : (
+                mergedBlocks.map((block) => {
+                  const code = codeMap[block.slug];
 
-                return (
-                  <div key={block.slug}>
-                    {/* Card */}
-                    <GalleryBlockCard
-                      slug={block.slug}
-                      block={{
-                        ...block,
-                        fetchedCode: code,
-                      }}
-                      onFullPreview={handleFullPreview}
-                      onViewCode={() => fetchCode(block.slug)}
-                    />
-
-                    {/* Docs */}
-                    <div className="max-w-7xl">
-                      <DocsSection
-                        usage={code?.usage}
-                        dependencies={code?.dependencies || []}
+                  return (
+                    <div key={block.slug}>
+                      {/* Card */}
+                      <GalleryBlockCard
+                        slug={block.slug}
+                        block={{
+                          ...block,
+                          fetchedCode: code,
+                        }}
+                        onFullPreview={handleFullPreview}
+                        onViewCode={() => fetchCode(block.slug)}
                       />
-                    </div>
 
-                    <hr className="border-zinc-100 dark:border-white/[0.05]" />
-                  </div>
-                );
-              })}
+                      {/* Docs */}
+                      <div className="max-w-7xl">
+                        <DocsSection
+                          usage={code?.usage}
+                          dependencies={code?.dependencies || []}
+                        />
+                      </div>
+
+                      <hr className="border-zinc-100 dark:border-white/[0.05]" />
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </main>

@@ -7,12 +7,13 @@ import Breadcrumbs from "../components/app/Breadcrumbs";
 import IframeWrapper from "../components/app/IframeWrapper";
 import GalleryBlockCard from "../components/docs/handlers/GalleryBlockCard";
 import { useTemplates } from "../hooks/useTemplates";
+import { BlocksGridSkeleton } from "../components/app/skeletons/BlocksGridSkeleton";
 
 export default function TemplatePage() {
   const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
 
-  const templates = useTemplates();
+  const { templates, loading } = useTemplates();
 
   const templatesInGallery = templates.filter((t) => {
     if (!slug) return true;
@@ -68,7 +69,9 @@ export default function TemplatePage() {
           </header>
 
           <div className="space-y-24 md:space-y-40 mb-20">
-            {templatesInGallery.length > 0 ? (
+            {loading ? (
+              <BlocksGridSkeleton />
+            ) : templatesInGallery.length > 0 ? (
               templatesInGallery.map((template) => (
                 <GalleryBlockCard
                   key={template.slug}

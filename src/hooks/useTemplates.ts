@@ -8,22 +8,31 @@ export type TemplateItem = {
   slug: string;
   category: string;
   isPro: boolean;
-
   demoUrl: string;
   downloadUrl: string;
 };
 
 export function useTemplates() {
   const [templates, setTemplates] = useState<TemplateItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTemplates = async () => {
-      const res = await API.get("/components?type=template");
-      setTemplates(res.data.components || []);
+      try {
+        const res = await API.get("/components?type=template");
+        setTemplates(res.data.components || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchTemplates();
   }, []);
 
-  return templates;
+  return {
+    templates,
+    loading,
+  };
 }

@@ -16,7 +16,7 @@ type BlockItem = {
 };
 
 export default function Blocks() {
-  const blocks = useBlocks();
+  const { blocks } = useBlocks();
 
   const isLoading = !blocks || blocks.length === 0;
 

@@ -4,7 +4,7 @@ import { useTemplates } from "../hooks/useTemplates";
 import RegistryFooter from "./sections/Footer";
 
 export default function Templates() {
-  const templates = useTemplates();
+  const { templates } = useTemplates();
 
   const isLoading = !templates || templates.length === 0;
 

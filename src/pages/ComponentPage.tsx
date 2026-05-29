@@ -10,6 +10,7 @@ import DocsTabs from "../components/docs/DocsTabs";
 import ComponentPreview from "../components/docs/handlers/ComponentPreview";
 import DocsSection from "../components/docs/DocsSection";
 import API from "../lib/axios";
+import RegistryFooter from "./sections/Footer";
 
 type ComponentSlug = keyof typeof componentRegistry;
 type CodeData = {
@@ -66,110 +67,113 @@ export default function ComponentPage() {
   }, [tab, slug]);
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-[1440px] bg-white transition-colors duration-300 dark:bg-[#030303]">
-      <div className="hidden lg:block">
-        <Sidebar />
-      </div>
+    <>
+      <div className="mx-auto flex min-h-screen max-w-[1440px] bg-white transition-colors duration-300 dark:bg-[#030303]">
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
 
-      <main className="flex-1 overflow-x-hidden px-4 py-10 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <Breadcrumbs title={componentData.title} />
+        <main className="flex-1 overflow-x-hidden px-4 py-10 sm:px-8 lg:px-12">
+          <div className="mx-auto max-w-5xl">
+            <Breadcrumbs title={componentData.title} />
 
-          {/* Header */}
-          <header className="mb-10 mt-4">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h1 className="text-4xl font-medium tracking-tight leading-snug text-gradient md:text-5xl mb-4">
-                {componentData.title}
-              </h1>
-
-              <p className="max-w-2xl text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400">
-                {componentData.description}
-              </p>
-            </motion.div>
-          </header>
-
-          {/* Tabs */}
-          <DocsTabs tab={tab} setTab={setTab} />
-
-          <AnimatePresence mode="wait">
-            {tab === "preview" ? (
+            {/* Header */}
+            <header className="mb-10 mt-4">
               <motion.div
-                key="preview"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-12"
+                transition={{ duration: 0.4 }}
               >
-                {componentData.variants ? (
-                  componentData.variants.map((variant) => (
-                    <section key={variant.name} className="space-y-5">
-                      <div className="flex items-center gap-3">
-                        <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-                          {variant.name}
-                        </h3>
-                        <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
-                      </div>
+                <h1 className="text-4xl font-medium tracking-tight leading-snug text-gradient md:text-5xl mb-4">
+                  {componentData.title}
+                </h1>
 
+                <p className="max-w-2xl text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400">
+                  {componentData.description}
+                </p>
+              </motion.div>
+            </header>
+
+            {/* Tabs */}
+            <DocsTabs tab={tab} setTab={setTab} />
+
+            <AnimatePresence mode="wait">
+              {tab === "preview" ? (
+                <motion.div
+                  key="preview"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="space-y-12"
+                >
+                  {componentData.variants ? (
+                    componentData.variants.map((variant) => (
+                      <section key={variant.name} className="space-y-5">
+                        <div className="flex items-center gap-3">
+                          <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
+                            {variant.name}
+                          </h3>
+                          <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
+                        </div>
+
+                        <ComponentPreview
+                          component={Component}
+                          variant={variant.name}
+                          category={componentData.category}
+                        />
+                      </section>
+                    ))
+                  ) : (
+                    <section className="space-y-5">
                       <ComponentPreview
                         component={Component}
-                        variant={variant.name}
                         category={componentData.category}
                       />
                     </section>
-                  ))
-                ) : (
-                  <section className="space-y-5">
-                    <ComponentPreview
-                      component={Component}
-                      category={componentData.category}
-                    />
-                  </section>
-                )}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="code"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                <div className="flex items-center gap-3">
-                  <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-                    Source Code
-                  </h3>
-                  <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
-                </div>
-
-                {/* 🔥 Loading */}
-                {loading && (
-                  <div className="h-[200px] flex items-center justify-center text-zinc-400">
-                    Loading...
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="code"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="space-y-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
+                      Source Code
+                    </h3>
+                    <div className="h-px flex-1 bg-zinc-100 dark:bg-zinc-800/50" />
                   </div>
-                )}
 
-                {error && (
-                  <div className="h-[200px] flex items-center justify-center text-zinc-400">
-                    {error}
-                  </div>
-                )}
+                  {/* 🔥 Loading */}
+                  {loading && (
+                    <div className="h-[200px] flex items-center justify-center text-zinc-400">
+                      Loading...
+                    </div>
+                  )}
 
-                <CodeBlock code={code?.component || ""} language="tsx" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  {error && (
+                    <div className="h-[200px] flex items-center justify-center text-zinc-400">
+                      {error}
+                    </div>
+                  )}
 
-          <DocsSection
-            installation={componentData.installation}
-            usage={componentData.usage}
-            dependencies={componentData.dependencies}
-          />
-        </div>
-      </main>
-    </div>
+                  <CodeBlock code={code?.component || ""} language="tsx" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <DocsSection
+              installation={componentData.installation}
+              usage={componentData.usage}
+              dependencies={componentData.dependencies}
+            />
+          </div>
+        </main>
+      </div>
+      <RegistryFooter />
+    </>
   );
 }

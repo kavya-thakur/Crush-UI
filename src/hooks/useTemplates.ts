@@ -8,6 +8,9 @@ export type TemplateItem = {
   slug: string;
   category: string;
   isPro: boolean;
+
+  demoUrl: string;
+  downloadUrl: string;
 };
 
 export function useTemplates() {

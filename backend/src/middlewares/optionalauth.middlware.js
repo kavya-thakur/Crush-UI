@@ -12,11 +12,6 @@ function optionalAuth(req, res, next) {
 
     req.user = decoded;
   } catch (error) {
-    /*
-      Invalid/expired token:
-      treat user as guest
-    */
-
     req.user = null;
   }
 

@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Sidebar from "../components/layout/Sidebar";
-import { templateRegistry } from "../data/templateRegistry";
 import Breadcrumbs from "../components/app/Breadcrumbs";
 import IframeWrapper from "../components/app/IframeWrapper";
 import GalleryBlockCard from "../components/docs/handlers/GalleryBlockCard";
@@ -15,23 +14,16 @@ export default function TemplatePage() {
 
   const templates = useTemplates();
 
-  const mergedTemplates = useMemo(() => {
-    return templates.map((t) => ({
-      ...t,
-      ...(templateRegistry[t.slug] || {}),
-    }));
-  }, [templates]);
+  const templatesInGallery = templates.filter((t) => {
+    if (!slug) return true;
+    return t.slug === slug;
+  });
 
   const [isFullView, setIsFullView] = useState(false);
   const [activePreviewSlug, setActivePreviewSlug] = useState<string | null>(
     null,
   );
   const [view, setView] = useState<"desktop" | "tablet" | "mobile">("desktop");
-
-  const templatesInGallery = mergedTemplates.filter((t) => {
-    if (!slug) return true;
-    return t.slug === slug;
-  });
 
   const firstTemplate = templatesInGallery[0];
 
@@ -45,7 +37,7 @@ export default function TemplatePage() {
     setIsFullView(true);
   };
 
-  const activeModalTemplate = mergedTemplates.find(
+  const activeModalTemplate = templates.find(
     (t) => t.slug === activePreviewSlug,
   );
 
@@ -65,11 +57,11 @@ export default function TemplatePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-gradient mb-6">
+              <h1 className="text-4xl md:text-5xl leading-normal font-medium tracking-tight text-gradient mb-6">
                 {headerTitle}
               </h1>
 
-              <p className="max-w-3xl text-base md:text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+              <p className="max-w-3xl text-base md:text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed ">
                 {headerDescription}
               </p>
             </motion.div>
@@ -115,9 +107,11 @@ export default function TemplatePage() {
               onClose={() => setIsFullView(false)}
               isFullPage
             >
-              {activeModalTemplate.component && (
-                <activeModalTemplate.component />
-              )}
+              <iframe
+                src={activeModalTemplate.demoUrl}
+                title={activeModalTemplate.title}
+                className="h-full w-full border-0"
+              />
             </IframeWrapper>
           </motion.div>
         )}

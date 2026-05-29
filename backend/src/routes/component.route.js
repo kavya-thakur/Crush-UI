@@ -16,5 +16,5 @@ router.post("/components", createComponent);
 
 router.get("/components/:id", getSingleComponent);
 router.get("/components/:slug/code", optionalAuth, getTheCode);
-router.get("/template/download/:slug", downloadTemplate);
+router.get("/template/download/:slug", optionalAuth, downloadTemplate);
 module.exports = router;

@@ -94,7 +94,6 @@ export const blockRegistry: Record<string, BlockDoc> = {
     category: "Feature Sections",
     component: AutomationFlowWithSkeletons,
     previewHeight: 600,
-    isPro: true,
     dependencies: ["motion"],
     usage: `<AutomationFlowWithSkeletons />`,
   },

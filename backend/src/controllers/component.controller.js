@@ -132,33 +132,62 @@ async function getTheCode(req, res) {
 }
 
 async function downloadTemplate(req, res) {
-  const template = await componentModel.findOne({
-    slug: req.params.slug,
-    type: "template",
-  });
+  try {
+    const { slug } = req.params;
 
-  if (!template) {
-    return res.status(404).json({ message: "Not found" });
+    const template = await componentModel.findOne({
+      slug,
+      type: "template",
+    });
+
+    if (!template) {
+      return res.status(404).json({
+        message: "Template not found",
+      });
+    }
+
+    // FREE TEMPLATE
+    if (!template.isPro) {
+      return res.status(200).json({
+        downloadUrl: template.downloadUrl,
+      });
+    }
+
+    // LOGIN REQUIRED
+    console.log("REQ USER:", req.user);
+    if (!req.user) {
+      return res.status(401).json({
+        message: "Login required",
+      });
+    }
+
+    const user = await userModel.findById(req.user.id);
+
+    if (!user) {
+      return res.status(401).json({
+        message: "User not found",
+      });
+    }
+
+    // PRO CHECK
+    if (user.plan !== "pro") {
+      return res.status(403).json({
+        message: "Upgrade to Pro",
+      });
+    }
+
+    return res.status(200).json({
+      downloadUrl: template.downloadUrl,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Something went wrong",
+    });
   }
-
-  // FREE template
-  if (!template.isPro) {
-    return res.redirect(template.downloadUrl);
-  }
-
-  // PRO template
-  if (!req.user) {
-    return res.status(401).json({ message: "Login required" });
-  }
-
-  const user = await userModel.findById(req.user.id);
-
-  if (user.plan !== "pro") {
-    return res.status(403).json({ message: "Upgrade to pro" });
-  }
-
-  return res.redirect(template.downloadUrl);
 }
+
 module.exports = {
   getAllComponent,
   getSingleComponent,

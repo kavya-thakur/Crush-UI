@@ -1,28 +1,12 @@
 import Sidebar from "../components/layout/Sidebar";
 import TemplatesGrid from "../components/docs/handlers/TemplatesGrid";
-
-import { useMemo } from "react";
-import { templateRegistry } from "../data/templateRegistry";
 import { useTemplates } from "../hooks/useTemplates";
 import RegistryFooter from "./sections/Footer";
 
 export default function Templates() {
   const templates = useTemplates();
+
   const isLoading = !templates || templates.length === 0;
-  const mergedTemplates = useMemo(() => {
-    return templates.map((t) => {
-      const local = templateRegistry[t.slug as keyof typeof templateRegistry];
-
-      if (!local) {
-        console.warn("Missing template in registry:", t.slug);
-      }
-
-      return {
-        ...t,
-        ...local,
-      };
-    });
-  }, [templates]);
 
   return (
     <>
@@ -43,9 +27,10 @@ export default function Templates() {
             </p>
           </header>
 
-          <TemplatesGrid templates={mergedTemplates} isLoading={isLoading} />
+          <TemplatesGrid templates={templates} isLoading={isLoading} />
         </main>
       </div>
+
       <RegistryFooter />
     </>
   );

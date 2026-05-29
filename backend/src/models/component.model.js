@@ -13,7 +13,7 @@ const componentSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
-      unique: true, // 🔥 important
+      unique: true,
     },
     type: {
       type: String,
@@ -32,6 +32,9 @@ const componentSchema = new mongoose.Schema(
       component: String,
     },
     downloadUrl: {
+      type: String,
+    },
+    demoUrl: {
       type: String,
     },
   },

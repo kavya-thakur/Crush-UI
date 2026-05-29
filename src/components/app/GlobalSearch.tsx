@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { componentRegistry } from "../../data/componentRegistry";
 import { blockRegistry } from "../../data/blockRegistry";
-import { templateRegistry } from "../../data/templateRegistry";
+import { useTemplates } from "../../hooks/useTemplates";
 
 type ItemType = "component" | "block" | "template";
 
@@ -18,7 +18,7 @@ type Item = {
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-
+  const templates = useTemplates();
   /* ------------------------------------------------ */
   /* Build Search Index                               */
   /* ------------------------------------------------ */
@@ -40,17 +40,14 @@ export default function GlobalSearch() {
       type: "block",
     }));
 
-    const templateItems: Item[] = Object.entries(templateRegistry).map(
-      ([slug, t]) => ({
-        name: t.title,
-        path: `/templates/${slug}`,
-        type: "template",
-      }),
-    );
+    const templateItems: Item[] = templates.map((t) => ({
+      name: t.title,
+      path: `/templates/${t.slug}`,
+      type: "template",
+    }));
 
     return [...componentItems, ...blockItems, ...templateItems];
-  }, []);
-
+  }, [templates]);
   /* ------------------------------------------------ */
   /* Filter Results                                   */
   /* ------------------------------------------------ */

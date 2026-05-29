@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Maximize2 } from "lucide-react";
+import { ArrowDown, Maximize2 } from "lucide-react";
 import CodeBlock from "../CodeBlock";
 import PremiumCodeGuard from "../../app/PremiumCodeGuard";
 import DocsTabs from "../DocsTabs";
-import API from "../../../lib/axios";
-
+import { Lock } from "lucide-react";
+import { useTemplateDownload } from "../../../hooks/useTemplateDownload";
+import { useAuth } from "../../../context/AuthContext";
 type Props = {
   slug: string;
   block: any;
@@ -20,28 +21,14 @@ export default function GalleryBlockCard({
   onViewCode,
 }: Props) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
-
+  const { user } = useAuth();
   const PreviewComponent = block.component;
   const isTemplate = block.type === "template";
+  const { downloadTemplate } = useTemplateDownload();
 
-  //  Download handler
-  const handleDownload = async () => {
-    try {
-      await API.get(`/templates/download/${slug}`, {
-        withCredentials: true,
-      });
-      // backend redirect will trigger download
-    } catch (err: any) {
-      const message = err.response?.data?.message;
-
-      if (message === "Login required") {
-        alert("Please login first");
-      } else if (message === "Upgrade to pro") {
-        alert("Upgrade to pro to download this template");
-      }
-    }
+  const handleDownload = () => {
+    downloadTemplate(block.slug);
   };
-
   return (
     <section className="group space-y-6">
       {/* Header */}
@@ -54,7 +41,7 @@ export default function GalleryBlockCard({
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           {/*  Tabs ONLY for non-templates */}
           {!isTemplate && (
             <DocsTabs
@@ -73,13 +60,37 @@ export default function GalleryBlockCard({
               }
             />
           )}
+          {/* for templates  */}
+          {isTemplate && (
+            <button
+              onClick={handleDownload}
+              className={`group flex items-center justify-center gap-2.5 rounded-xl px-5 py-2 text-sm font-medium transition-all duration-200 ${
+                block.isPro && user?.plan !== "pro"
+                  ? "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800"
+                  : "bg-black text-white dark:bg-white dark:text-black hover:opacity-90 active:scale-[0.98]"
+              }`}
+            >
+              {block.isPro && user?.plan !== "pro" ? (
+                <>
+                  <Lock className="h-4 w-4" />
+                  <span>Unlock Template</span>
+                </>
+              ) : (
+                <>
+                  <ArrowDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
+                  <span>Download</span>
+                </>
+              )}
+            </button>
+          )}
 
           {/* Fullscreen */}
           <button
             onClick={() => onFullPreview(slug)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+            className="flex items-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition hover:bg-zinc-50 dark:hover:bg-zinc-900"
           >
             <Maximize2 size={15} />
+            <span>Live Demo</span>
           </button>
         </div>
       </div>
@@ -96,25 +107,60 @@ export default function GalleryBlockCard({
               exit={{ opacity: 0, y: -10 }}
               className="relative z-10 w-full min-h-[400px] flex flex-col items-center"
             >
-              <div className="w-full h-full flex items-start justify-center overflow-visible">
+              {/* <div className="w-full h-full flex items-start justify-center overflow-visible">
                 {PreviewComponent && (
                   <div className="w-full origin-top transform-gpu">
                     <PreviewComponent />
                   </div>
                 )}
+              </div> */}
+
+              <div className="w-full h-full flex items-start justify-center overflow-visible">
+                {isTemplate ? (
+                  <iframe
+                    src={block.demoUrl}
+                    title={block.title}
+                    className="h-[700px] w-full border-0"
+                    loading="lazy"
+                  />
+                ) : (
+                  PreviewComponent && (
+                    <div className="w-full origin-top transform-gpu">
+                      <PreviewComponent />
+                    </div>
+                  )
+                )}
               </div>
 
               {/*  Download button for templates */}
               {isTemplate && (
-                <div className="py-8 flex justify-center">
+                <div className="py-6 flex flex-col items-center  border-t border-neutral-100 dark:border-neutral-900 mt-6">
                   <button
                     onClick={handleDownload}
-                    className="px-6 py-3 rounded-full bg-black text-white hover:opacity-90 transition"
+                    className={`group flex items-center justify-center gap-2.5 rounded-xl px-5 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 w-full sm:w-auto ${
+                      block.isPro && user?.plan !== "pro"
+                        ? "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800"
+                        : "bg-black text-white dark:bg-white dark:text-black hover:opacity-90 active:scale-[0.98]"
+                    }`}
                   >
-                    {block.isPro
-                      ? "Download Template (Pro)"
-                      : "Download Template"}
+                    {block.isPro && user?.plan !== "pro" ? (
+                      <>
+                        <Lock className="h-3.5 w-3.5 stroke-[2.5]" />
+                        <span>Unlock Full Template</span>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowDown className="h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover:translate-y-0.5" />
+                        <span>Download Source Files</span>
+                      </>
+                    )}
                   </button>
+
+                  <p className="mt-3 text-xs font-medium tracking-wide text-neutral-400 dark:text-neutral-500 text-center sm:text-left">
+                    {block.isPro && user?.plan !== "pro"
+                      ? "Complete source files, assets, and architecture updates included."
+                      : "Instant download • Production-ready system files"}
+                  </p>
                 </div>
               )}
             </motion.div>

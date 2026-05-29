@@ -10,6 +10,7 @@ import DocsSection from "../components/docs/DocsSection";
 import API from "../lib/axios";
 import { useBlocks } from "../hooks/useBlocks";
 import { BlocksGridSkeleton } from "../components/app/skeletons/BlocksGridSkeleton";
+import RegistryFooter from "./sections/Footer";
 
 type CodeData = {
   component?: string;
@@ -157,6 +158,7 @@ export default function BlockPage() {
           )}
         </AnimatePresence>
       </div>
+      <RegistryFooter />
     </>
   );
 }

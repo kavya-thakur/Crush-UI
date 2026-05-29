@@ -12,15 +12,22 @@ export type BlockItem = {
 
 export function useBlocks() {
   const [blocks, setBlocks] = useState<BlockItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlocks = async () => {
-      const res = await API.get("/components?type=section");
-      setBlocks(res.data.components || []);
+      try {
+        const res = await API.get("/components?type=section");
+        setBlocks(res.data.components || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchBlocks();
   }, []);
 
-  return blocks;
+  return { blocks, loading };
 }

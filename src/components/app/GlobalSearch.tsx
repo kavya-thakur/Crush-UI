@@ -18,7 +18,7 @@ type Item = {
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const templates = useTemplates();
+  const { templates } = useTemplates();
   /* ------------------------------------------------ */
   /* Build Search Index                               */
   /* ------------------------------------------------ */

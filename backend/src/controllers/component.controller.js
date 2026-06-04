@@ -11,49 +11,58 @@ async function getAllComponent(req, res) {
       filter.type = type;
     }
 
-    const components = await componentModel.find(filter).select("-code");
+    const components = await componentModel
+      .find(filter)
+      .select("title description slug type isPro category demoUrl createdAt")
+      .lean();
 
     return res.status(200).json({
-      message: "fetched component successfully",
       components,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "failed to fetch components",
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Failed to fetch components",
     });
   }
 }
 
 async function getSingleComponent(req, res) {
-  const id = req.params.id;
-  const component = await componentModel.findById(id);
-  if (!component) {
-    return res.status(404).json({
-      message: "component not found",
+  try {
+    const component = await componentModel.findById(req.params.id).lean();
+
+    if (!component) {
+      return res.status(404).json({
+        message: "Component not found",
+      });
+    }
+
+    return res.status(200).json({
+      component,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Failed to fetch component",
     });
   }
-  return res.status(200).json({
-    message: "single component fetched successfully",
-    component,
-  });
 }
 
 async function createComponent(req, res) {
   try {
-    const { title, description, code, category, slug, isPro } = req.body;
-
-    if (!title || !description || !slug || !code?.component) {
-      return res.status(400).json({
-        message: "Missing required fields",
-      });
-    }
-
-    const existing = await componentModel.findOne({ slug });
-    if (existing) {
-      return res.status(400).json({
-        message: "Component with this slug already exists",
-      });
-    }
+    const {
+      title,
+      description,
+      code,
+      category,
+      slug,
+      isPro,
+      type,
+      downloadUrl,
+      demoUrl,
+    } = req.body;
 
     const component = await componentModel.create({
       title,
@@ -62,6 +71,9 @@ async function createComponent(req, res) {
       isPro,
       code,
       category,
+      type,
+      downloadUrl,
+      demoUrl,
     });
 
     return res.status(201).json({
@@ -69,7 +81,14 @@ async function createComponent(req, res) {
       component,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "Slug already exists",
+      });
+    }
+
     return res.status(500).json({
       message: "Failed to create component",
     });
@@ -77,11 +96,12 @@ async function createComponent(req, res) {
 }
 async function getTheCode(req, res) {
   try {
-    const { slug } = req.params;
-
-    const component = await componentModel.findOne({
-      slug,
-    });
+    const component = await componentModel
+      .findOne({
+        slug: req.params.slug,
+      })
+      .select("code isPro")
+      .lean();
 
     if (!component) {
       return res.status(404).json({
@@ -89,22 +109,19 @@ async function getTheCode(req, res) {
       });
     }
 
-    // FREE COMPONENT
     if (!component.isPro) {
       return res.status(200).json({
         code: component.code,
       });
     }
 
-    // LOGIN REQUIRED
     if (!req.user) {
       return res.status(401).json({
         message: "Login required",
       });
     }
 
-    // FETCH FRESH USER
-    const user = await userModel.findById(req.user.id);
+    const user = await userModel.findById(req.user.id).select("plan").lean();
 
     if (!user) {
       return res.status(401).json({
@@ -112,7 +129,6 @@ async function getTheCode(req, res) {
       });
     }
 
-    // PRO CHECK
     if (user.plan !== "pro") {
       return res.status(403).json({
         message: "Upgrade to Pro",
@@ -133,12 +149,13 @@ async function getTheCode(req, res) {
 
 async function downloadTemplate(req, res) {
   try {
-    const { slug } = req.params;
-
-    const template = await componentModel.findOne({
-      slug,
-      type: "template",
-    });
+    const template = await componentModel
+      .findOne({
+        slug: req.params.slug,
+        type: "template",
+      })
+      .select("downloadUrl isPro")
+      .lean();
 
     if (!template) {
       return res.status(404).json({
@@ -146,22 +163,19 @@ async function downloadTemplate(req, res) {
       });
     }
 
-    // FREE TEMPLATE
     if (!template.isPro) {
       return res.status(200).json({
         downloadUrl: template.downloadUrl,
       });
     }
 
-    // LOGIN REQUIRED
-    console.log("REQ USER:", req.user);
     if (!req.user) {
       return res.status(401).json({
         message: "Login required",
       });
     }
 
-    const user = await userModel.findById(req.user.id);
+    const user = await userModel.findById(req.user.id).select("plan").lean();
 
     if (!user) {
       return res.status(401).json({
@@ -169,7 +183,6 @@ async function downloadTemplate(req, res) {
       });
     }
 
-    // PRO CHECK
     if (user.plan !== "pro") {
       return res.status(403).json({
         message: "Upgrade to Pro",

@@ -40,7 +40,9 @@ const componentSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+componentSchema.index({ type: 1 });
 
+componentSchema.index({ category: 1 });
 const componentModel = mongoose.model("component", componentSchema);
 
 module.exports = componentModel;

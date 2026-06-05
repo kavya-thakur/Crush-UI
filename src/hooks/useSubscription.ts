@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
 import API from "../lib/axios";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -11,6 +12,7 @@ declare global {
 
 export function useSubscription() {
   const { user, setUser } = useAuth();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -107,6 +109,8 @@ export function useSubscription() {
       if (!user) {
         setMessage("Please login to continue");
 
+        navigate("/login");
+
         return;
       }
 
@@ -125,11 +129,11 @@ export function useSubscription() {
       if (!order?.payment_session_id) {
         throw new Error("Unable to initialize payment session");
       }
-      /* INITIALIZE CASHFREE */
+
       const cashfree = window.Cashfree({
         mode: "sandbox",
       });
-      /* OPEN CHECKOUT */
+
       const result = await cashfree.checkout({
         paymentSessionId: order.payment_session_id,
 

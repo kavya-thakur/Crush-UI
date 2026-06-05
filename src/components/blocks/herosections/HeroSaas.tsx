@@ -155,17 +155,16 @@ export const Navbar = () => {
 };
 
 const HeroSaas = () => {
-  // Sophisticated Scroll Parallax for the Image
   const { scrollY } = useScroll();
   const yImage = useTransform(scrollY, [0, 500], [0, -40]);
   const rotateX = useTransform(scrollY, [0, 500], [0, 5]);
 
-  const transition = { duration: 1.4, ease: [0.16, 1, 0.3, 1] } as const;
+  const transition = { type: "spring", stiffness: 100, damping: 20 } as const;
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#ffffff] dark:bg-[#080808] flex flex-col items-center selection:bg-zinc-200 dark:selection:bg-zinc-800">
       <Navbar />
-      {/* Background Refinement: Minimalist Grid & Spotlight */}
+
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-zinc-100/50 dark:bg-zinc-900/20 blur-[120px] rounded-full" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
@@ -191,8 +190,6 @@ const HeroSaas = () => {
             Trusted by 1,000+ growing B2B teams <ChevronRight size={12} />
           </span>
         </motion.div>
-
-        {/* Text Width Constraint: Max-W-3xl is the "Sweet Spot" for Titles */}
         <div className="max-w-4xl">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -233,7 +230,6 @@ const HeroSaas = () => {
             </span>
           </motion.h1>
 
-          {/* Subheading Width: Constrained to 60ch for optimal reading */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -244,46 +240,58 @@ const HeroSaas = () => {
             <br /> collaborate, and scale with confidence.
           </motion.p>
         </div>
-
         {/* Action Group */}
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, ...transition }}
-          className="flex flex-col py-10 sm:flex-row justify-center w-full gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center w-full gap-4 py-10"
         >
           <button
             className="
-  group relative h-12 px-8 rounded-xl font-medium text-white 
-  transition-all duration-300
-  /* The Main Gradient */
-  bg-[linear-gradient(180deg,#538BF3_44%,#CBDDFF_100%)]
-  /* Premium Detailing: Inner Light & Shadow */
-  shadow-[0_1px_2px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.3)]
-  hover:shadow-[0_10px_20px_-10px_rgba(83,139,243,0.5)]
-  hover:scale-[1.02] active:scale-[0.98]
-"
+      group relative h-12 w-full sm:w-auto px-8 rounded-full font-medium text-white 
+      transition-all duration-300 overflow-hidden
+      bg-[linear-gradient(180deg,#538BF3_44%,#CBDDFF_100%)]
+      shadow-[0_1px_2px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.3)]
+      hover:shadow-[0_10px_20px_-10px_rgba(83,139,243,0.5)]
+      hover:scale-[1.02] active:scale-[0.98]
+    "
           >
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="relative z-10 flex items-center justify-center gap-2 text-sm">
               Get Started{" "}
               <ArrowRight
                 size={16}
-                className="group-hover:translate-x-0.5 transition-transform"
+                className="group-hover:translate-x-1 transition-transform duration-300"
               />
             </span>
+
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] transition-transform" />
           </button>
-          <Link to="/demo">
-            <button className="group h-12 px-8 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-transparent text-zinc-600 dark:text-zinc-400 font-medium text-sm transition-all hover:bg-zinc-50 dark:hover:bg-white/5 flex items-center gap-2">
+
+          {/* Secondary Action Button */}
+          <Link to="/demo" className="w-full sm:w-auto">
+            <button
+              className="
+        group h-12 w-full sm:w-auto px-8 rounded-full font-medium text-sm
+        border border-zinc-200/80 dark:border-white/10 
+        bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 
+        shadow-sm shadow-zinc-100/50 dark:shadow-none
+        transition-all duration-300
+        hover:bg-zinc-50 dark:hover:bg-white/5 
+        hover:border-zinc-300 dark:hover:border-white/20
+        hover:scale-[1.02] active:scale-[0.98]
+        flex items-center justify-center gap-2
+      "
+            >
               Request Demo{" "}
               <ArrowRight
                 size={14}
-                className="group-hover:translate-x-0.5 transition-transform"
+                className="group-hover:translate-x-1 transition-transform duration-300"
               />
             </button>
           </Link>
         </motion.div>
-
-        {/* Tasteful Image Handling: The "Viewport" Mockup */}
         <motion.div
           style={{ y: yImage, rotateX }}
           initial={{ opacity: 0, y: 60 }}

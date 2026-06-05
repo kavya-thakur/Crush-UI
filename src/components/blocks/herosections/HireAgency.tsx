@@ -20,7 +20,6 @@ export const HireAgency: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [email, setEmail] = useState("");
 
-  // Auto-slide effect for the "smooth" feel
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -30,13 +29,6 @@ export const HireAgency: React.FC = () => {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#fbfbfb] font-sans selection:bg-black selection:text-white">
-      {/* Background Gradient Decorative Image */}
-      <img
-        src="https://cdn.prod.website-files.com/6900c654960f0d76825aec71/6901e53513dcf1ea037d2e38_bg-gradient.avif"
-        className="absolute right-0 top-0 z-0 h-[80%] w-auto opacity-60 mix-blend-multiply"
-        alt=""
-      />
-
       <div className="container relative z-10 mx-auto px-6 py-20 lg:px-12 xl:max-w-7xl">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-8">
           {/* Left Column: Content */}
@@ -104,8 +96,7 @@ export const HireAgency: React.FC = () => {
                   </svg>
                 </motion.button>
               </form>
-
-              {/* Social Proof */}
+              Social Proof
               <div className="flex items-center gap-4">
                 <img
                   src="https://cdn.prod.website-files.com/6900c654960f0d76825aec71/690126cccb69ed9dab42341b_confirm_users_image.avif"
@@ -147,7 +138,7 @@ export const HireAgency: React.FC = () => {
               </div>
 
               {/* Sub-Image (Floating UI element) */}
-              <div className="absolute -bottom-10 -left-10 z-20 w-[60%] md:-left-20">
+              <div className="absolute -bottom-10 -left-0 z-20 w-[60%] md:-left-20">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={slides[currentSlide].sub}

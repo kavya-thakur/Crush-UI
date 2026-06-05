@@ -3,7 +3,8 @@ import type { ComponentType } from "react";
 /* HERO */
 import Hero from "../components/blocks/herosections/HeroSaas";
 import HeroAgents from "../components/blocks/herosections/HeroAgent";
-import { HiringAgency } from "../components/templates/NewLanding";
+import { HireAgency } from "../components/blocks/herosections/HireAgency";
+
 /* CTA */
 import SimpleCTA from "../components/blocks/CTA/SimpleCTA";
 // FOOTER
@@ -70,7 +71,7 @@ export const blockRegistry: Record<string, BlockDoc> = {
     description:
       "Hiring Agency hero section with clip-path image reveals and staggered text.",
     category: "Hero Sections",
-    component: HiringAgency,
+    component: HireAgency,
     isPro: true,
     previewHeight: 600,
     dependencies: ["motion"],

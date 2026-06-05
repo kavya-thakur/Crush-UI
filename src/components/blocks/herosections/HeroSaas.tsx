@@ -5,12 +5,13 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, Menu, X } from "lucide-react";
 
 import { useState } from "react";
 
 export const Navbar = () => {
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
     { name: "Features", path: "#features" },
@@ -20,11 +21,24 @@ export const Navbar = () => {
     { name: "Contact", path: "#contact" },
   ];
 
+  const menuVariants: Record<string, any> = {
+    closed: {
+      opacity: 0,
+      y: -15,
+      transition: { duration: 0.2 },
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
     <nav
-      className={`fixed top-6 left-0 py-2 rounded-full max-w-6xl bg-white backdrop-blur-lg border-zinc-200/50 backdrop-blur-2xl shadow-sm  mx-auto right-0 z-[100] border-b transition-all duration-500 ease-[0.16,1,0.3,1] `}
+      className={`fixed top-6 left-4 right-4 md:left-0 md:right-0 py-2 rounded-[24px] md:rounded-full max-w-6xl bg-white backdrop-blur-lg border-zinc-200/50 backdrop-blur-2xl shadow-sm mx-auto z-[100] border-b transition-all duration-500 ease-[0.16,1,0.3,1]`}
     >
-      <div className="mx-auto max-w-7xl h-full px-6 flex items-center justify-between gap-8">
+      <div className="mx-auto max-w-7xl h-full px-6 flex items-center justify-between gap-4 md:gap-8">
         <div className="flex items-center gap-12">
           {/* Logo Section */}
           <div className="flex items-center gap-2.5 group cursor-pointer">
@@ -33,7 +47,7 @@ export const Navbar = () => {
               <div className="absolute left-[50%] top-[17.5%] w-[37.5%] h-[45.84%] bg-[#538BF3] rounded-[3px] transition-all duration-500 group-hover:left-[48%] group-hover:top-[20%]" />
               <div className="absolute left-[12.73%] bottom-[17.5%] w-[74.54%] h-[12.5%] bg-[#538BF3] rounded-full" />
             </div>
-            <span className="font-['Geist'] text-[28px] font-bold tracking-[-0.03em] text-black">
+            <span className="font-['Geist'] text-[24px] sm:text-[28px] font-bold tracking-[-0.03em] text-black transition-all">
               acurio
             </span>
           </div>
@@ -79,14 +93,14 @@ export const Navbar = () => {
         </div>
 
         {/* Action Group */}
-        <div className="flex items-center gap-4">
-          <button className="hidden md:block text-[15px] font-medium text-[#31373D] hover:text-black transition-colors px-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          <button className="hidden sm:block text-[15px] font-medium text-[#31373D] hover:text-black transition-colors px-4">
             Sign in
           </button>
 
           <button
             className="
-            group relative h-11 px-6 rounded-full font-medium text-[15px] 
+            group relative h-10 md:h-11 px-4 md:px-6 rounded-full font-medium text-[14px] md:text-[15px] 
             tracking-tight text-white overflow-hidden
             bg-[linear-gradient(180deg,#538BF3_44%,#CBDDFF_100%)]
             shadow-[0_4px_12px_-4px_rgba(83,139,243,0.4)]
@@ -95,11 +109,47 @@ export const Navbar = () => {
           "
           >
             <span className="relative z-10">Get a Demo</span>
-            {/* Subtle light sweep animation */}
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] transition-transform" />
+          </button>
+
+          {/* Mobile Menu Trigger button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 text-zinc-600 hover:text-black lg:hidden rounded-full hover:bg-zinc-100 transition-colors focus:outline-none"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Dropdown Menu Container */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            className="lg:hidden w-full px-6 pt-3 pb-4 flex flex-col gap-1 border-t border-zinc-100 mt-2"
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.path}
+                onClick={() => setIsOpen(false)}
+                className="py-2.5 px-3 rounded-xl text-[15px] font-medium text-[#1D1F20] hover:text-[#538BF3] hover:bg-neutral-50 transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+            <div className="sm:hidden border-t border-zinc-100 mt-2 pt-2">
+              <button className="w-full text-left py-2.5 px-3 text-[15px] font-medium text-[#31373D] hover:text-black rounded-xl hover:bg-neutral-50 transition-colors">
+                Sign in
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

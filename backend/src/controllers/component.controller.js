@@ -94,6 +94,7 @@ async function createComponent(req, res) {
     });
   }
 }
+
 async function getTheCode(req, res) {
   try {
     const component = await componentModel

@@ -1,8 +1,9 @@
 import { BlocksGridSkeleton } from "../../app/skeletons/BlocksGridSkeleton";
 import TemplateCard from "./TemplateCard";
+import type { TemplateItem } from "../../../hooks/useTemplates";
 
 type TemplatesGridProps = {
-  templates: any[];
+  templates: TemplateItem[];
   isLoading?: boolean;
 };
 
@@ -12,6 +13,14 @@ export default function TemplatesGrid({
 }: TemplatesGridProps) {
   if (isLoading) {
     return <BlocksGridSkeleton />;
+  }
+
+  if (templates.length === 0) {
+    return (
+      <p className="py-12 text-center text-zinc-500 dark:text-zinc-400">
+        No templates found.
+      </p>
+    );
   }
 
   return (

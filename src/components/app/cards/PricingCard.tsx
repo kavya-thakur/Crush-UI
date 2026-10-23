@@ -13,6 +13,8 @@ type Plan = {
   link?: string;
 };
 
+
+
 export default function PricingCard({
   plan,
   onUpgrade,

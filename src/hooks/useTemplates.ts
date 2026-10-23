@@ -15,24 +15,48 @@ export type TemplateItem = {
 export function useTemplates() {
   const [templates, setTemplates] = useState<TemplateItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
+    let isActive = true;
+
     const fetchTemplates = async () => {
+      setLoading(true);
+      setError(false);
+
       try {
-        const res = await API.get("/components?type=template");
-        setTemplates(res.data.components || []);
-      } catch (error) {
-        console.error(error);
+        const res = await API.get<{ components: TemplateItem[] }>(
+          "/components?type=template",
+        );
+        if (!Array.isArray(res.data?.components)) {
+          throw new Error("The server returned an invalid templates response");
+        }
+        if (isActive) {
+          setTemplates(res.data.components);
+        }
+      } catch (requestError) {
+        console.error("Failed to load templates:", requestError);
+        if (isActive) {
+          setError(true);
+        }
       } finally {
-        setLoading(false);
+        if (isActive) {
+          setLoading(false);
+        }
       }
     };
 
     fetchTemplates();
-  }, []);
+    return () => {
+      isActive = false;
+    };
+  }, [retryCount]);
 
   return {
     templates,
     loading,
+    error,
+    retry: () => setRetryCount((count) => count + 1),
   };
 }

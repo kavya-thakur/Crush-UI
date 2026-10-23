@@ -15,6 +15,14 @@ export default function ComponentsGrid({
     return <BlocksGridSkeleton />;
   }
 
+  if (components.length === 0) {
+    return (
+      <p className="py-12 text-center text-zinc-500 dark:text-zinc-400">
+        No components found.
+      </p>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
       {components.map((component, index) => (

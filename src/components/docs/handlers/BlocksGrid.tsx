@@ -1,11 +1,15 @@
 import { memo } from "react";
+import type { ComponentType } from "react";
 import BlockCategoryCard from "./BlockCategoryCard";
 import { BlocksGridSkeleton } from "../../app/skeletons/BlocksGridSkeleton";
 
 type Category = {
   name: string;
   slug: string;
-  previewBlock: any;
+  previewBlock: {
+    component: ComponentType;
+    isPro?: boolean;
+  };
   count: number;
   isPro: boolean;
 };
@@ -18,6 +22,14 @@ type Props = {
 function BlocksGrid({ categories, isLoading = false }: Props) {
   if (isLoading) {
     return <BlocksGridSkeleton />;
+  }
+
+  if (categories.length === 0) {
+    return (
+      <p className="py-12 text-center text-zinc-500 dark:text-zinc-400">
+        No block categories found.
+      </p>
+    );
   }
 
   return (

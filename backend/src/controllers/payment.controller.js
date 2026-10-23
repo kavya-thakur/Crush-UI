@@ -1,8 +1,6 @@
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-const crypto = require("crypto");
-
 const subscriptionModel = require("../models/subscription.model");
 
 const userModel = require("../models/user.model");

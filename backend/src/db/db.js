@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
 async function connectDB() {
-  mongoose.connect(process.env.MONGO_URL);
-  console.log("db is connected succesffuly");
+  const mongoUrl = process.env.MONGO_URL;
+
+  if (!mongoUrl) {
+    throw new Error("MONGO_URL is required to start the backend");
+  }
+
+  await mongoose.connect(mongoUrl);
+  console.log("Database connected successfully");
 }
 
 module.exports = connectDB;

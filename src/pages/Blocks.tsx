@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { blockRegistry } from "../data/blockRegistry";
 import { useBlocks } from "../hooks/useBlocks";
+import DataLoadError from "../components/app/DataLoadError";
 import RegistryFooter from "./sections/Footer";
 
 type BlockItem = {
@@ -16,9 +17,7 @@ type BlockItem = {
 };
 
 export default function Blocks() {
-  const { blocks } = useBlocks();
-
-  const isLoading = !blocks || blocks.length === 0;
+  const { blocks, loading, error, retry } = useBlocks();
 
   const categories = useMemo(() => {
     if (!blocks || blocks.length === 0) return [];
@@ -79,7 +78,11 @@ export default function Blocks() {
               </motion.div>
             </header>
 
-            <BlocksGrid categories={categories} isLoading={isLoading} />
+            {error ? (
+              <DataLoadError onRetry={retry} />
+            ) : (
+              <BlocksGrid categories={categories} isLoading={loading} />
+            )}
           </div>
         </main>
       </div>

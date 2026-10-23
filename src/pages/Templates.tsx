@@ -1,12 +1,11 @@
 import Sidebar from "../components/layout/Sidebar";
 import TemplatesGrid from "../components/docs/handlers/TemplatesGrid";
 import { useTemplates } from "../hooks/useTemplates";
+import DataLoadError from "../components/app/DataLoadError";
 import RegistryFooter from "./sections/Footer";
 
 export default function Templates() {
-  const { templates } = useTemplates();
-
-  const isLoading = !templates || templates.length === 0;
+  const { templates, loading, error, retry } = useTemplates();
 
   return (
     <>
@@ -27,7 +26,11 @@ export default function Templates() {
             </p>
           </header>
 
-          <TemplatesGrid templates={templates} isLoading={isLoading} />
+          {error ? (
+            <DataLoadError onRetry={retry} />
+          ) : (
+            <TemplatesGrid templates={templates} isLoading={loading} />
+          )}
         </main>
       </div>
 

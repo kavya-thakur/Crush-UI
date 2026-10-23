@@ -175,7 +175,12 @@ bash npm install
 
 ### Configure Environment Variables
 
-env MONGODB_URI= JWT_SECRET= CLIENT_URL= 
+Set these variables in the relevant deployment dashboards:
+
+- **Render backend:** `MONGO_URL`, `FRONTEND_URL`, and `JWT_SECRET`. Render provides `PORT` automatically.
+- **Vercel frontend:** `VITE_API_URL` must be the Render backend URL including `/api` (for example, `https://your-backend.onrender.com/api`).
+
+Redeploy the frontend after changing `VITE_API_URL`; Vite embeds it during the build. If the Render service uses the free tier, it can spin down while idle, and the first request after that may take significantly longer while the service starts. Use an always-on instance to avoid that cold-start delay.
 
 ### Start Development Server
 

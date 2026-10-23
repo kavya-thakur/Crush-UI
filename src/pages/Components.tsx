@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import API from "../lib/axios";
-import { componentRegistry } from "../data/componentRegistry";
+import { componentRegistry, type ComponentDoc } from "../data/componentRegistry";
 import Sidebar from "../components/layout/Sidebar";
 import ComponentsHeader from "../components/docs/handlers/ComponentsHeader";
 import ComponentsGrid from "../components/docs/handlers/ComponentsGrid";
+import DataLoadError from "../components/app/DataLoadError";
 import RegistryFooter from "./sections/Footer";
 
 type BackendComponent = {
@@ -14,40 +15,61 @@ type BackendComponent = {
   category: string;
 };
 
-type MergedComponent = BackendComponent & {
-  component: React.ComponentType<any>;
-  previewProps?: Record<string, any>;
-  description: string;
-};
+type MergedComponent = BackendComponent & ComponentDoc;
 
 export default function Components() {
   const [components, setComponents] = useState<MergedComponent[]>([]);
-  const isLoading = !components || components.length === 0;
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+
   useEffect(() => {
+    let isActive = true;
+
     const fetchComponents = async () => {
-      const res = await API.get<{ components: BackendComponent[] }>(
-        "/components",
-      );
+      setIsLoading(true);
+      setHasError(false);
 
-      const merged = res.data.components
-        .map((item) => {
-          const local =
-            componentRegistry[item.slug as keyof typeof componentRegistry];
+      try {
+        const res = await API.get<{ components: BackendComponent[] }>(
+          "/components",
+        );
 
-          if (!local) return null;
+        const merged = res.data.components
+          .map((item) => {
+            const local =
+              componentRegistry[item.slug as keyof typeof componentRegistry];
 
-          return {
-            ...item,
-            ...local,
-          };
-        })
-        .filter(Boolean) as MergedComponent[];
+            if (!local) return null;
 
-      setComponents(merged);
+            return {
+              ...item,
+              ...local,
+            };
+          })
+          .filter(Boolean) as MergedComponent[];
+
+        if (isActive) {
+          setComponents(merged);
+        }
+      } catch (error) {
+        console.error("Failed to load components:", error);
+        if (isActive) {
+          setHasError(true);
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
     };
 
     fetchComponents();
-  }, []);
+
+    return () => {
+      isActive = false;
+    };
+  }, [retryCount]);
 
   return (
     <>
@@ -59,7 +81,11 @@ export default function Components() {
         <main className="flex-1 w-full">
           <div className="px-6 py-12 md:py-16 lg:px-12">
             <ComponentsHeader />
-            <ComponentsGrid components={components} isLoading={isLoading} />
+            {hasError ? (
+              <DataLoadError onRetry={() => setRetryCount((count) => count + 1)} />
+            ) : (
+              <ComponentsGrid components={components} isLoading={isLoading} />
+            )}
           </div>
         </main>
       </div>
